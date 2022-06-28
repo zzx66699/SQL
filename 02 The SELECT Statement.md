@@ -11,7 +11,7 @@ SELECT id,
 FROM orders
 ```
 
-## The DISTINCT operator
+## The DISTINCT operator 非重复值
 exclude duplicates.
 ``` sql    
 SELECT DISTINCT total                                                                               # 只有unique的值
