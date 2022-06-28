@@ -44,20 +44,22 @@ SET account_id = 1000
 WHERE id = 10;
 ```
 改变多行  
-![1](https://user-images.githubusercontent.com/105503216/176135969-c9ae2774-3cf0-4798-b761-d937da68503a.png)
+![1](https://user-images.githubusercontent.com/105503216/176135969-c9ae2774-3cf0-4798-b761-d937da68503a.png)  
 使用别的表格中的数据
 ``` sql
 UPDATE table1
 JOIN table2
 ON table1.id = table2.id
 SET table1.income = table2.income,
-table1.education = table2.education
+table1.education = table2.education；
 ```
+
 ## 02 删除行
 ``` sql
 DELETE FROM orders1
 WHERE id < 10;
 ```
+
 ## 03 插入新的行 在原table的下面插入另外一个table的值  
 row增加 column不变  
 必要条件：column数相同
