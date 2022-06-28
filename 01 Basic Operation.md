@@ -2,7 +2,7 @@
 ## Create connection
 ![sql](https://user-images.githubusercontent.com/105503216/176116146-65f9a0ff-7b0e-4ffc-a4c9-c4a039de97f2.png)
 
-# Create schema(database)
+## Create schema(database)
 ``` sql
 CREATE SCHEMA CRM-review;
 ```
