@@ -1,4 +1,4 @@
-# The SELECT Clause
+# The SELECT Statement
 AS: set the name of columns.
 ``` sql
 USE crmreview;
