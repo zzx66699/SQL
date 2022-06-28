@@ -1,4 +1,5 @@
-# The SELECT Statement
+# Chapter2 The SELECT Statement
+## The SELECT clause
 AS: set the name of columns.
 ``` sql
 USE crmreview;
@@ -10,14 +11,14 @@ SELECT id,
 FROM orders
 ```
 
-# The DISTINCT operator
+## The DISTINCT operator
 exclude duplicates.
 ``` sql    
 SELECT DISTINCT total                                                                               # 只有unique的值
 FROM orders
 ```
 
-# The CASE WHEN ... THEN ... operator 条件
+## The CASE WHEN ... THEN ... operator 条件
 ``` sql
 SELECT CASE WHEN total_amount > 3000 THEN 'large'                                                   # 只有一次WHEN
             ELSE 'small' 
@@ -30,37 +31,37 @@ SELECT CASE WHEN total_amount > 3000 THEN 'large'                               
 FROM orders
 ```
 
-# The RIGHT & LEFT operator 左右取值
+## The RIGHT & LEFT operator 左右取值
 ``` sql
 SELECT LEFT(name, 3)        # 取name这一列每一行值的前3个字符
 FROM accounts;
 ```
 
-# The STRPOS & POSITION operator 位置
+## The STRPOS & POSITION operator 位置
 返回在a里b的index：STRPOS(a,b) 或者 POSITION(B IN A)
 ``` sql
 SELECT POSITION(' ' IN primary_poc) AS position     # 在primary_poc中空格的位置
 FROM accounts;
 ```
 
-# The TRIM operator 删去前后的空格
+## The TRIM operator 删去前后的空格
 ``` sql
 SELECT TRIM('    EHUI&U2  ') AS result;
 ```
 
-# The LOWER & UPPER operator 大小写
+## The LOWER & UPPER operator 大小写
 ``` sql
 SELECT LOWER(name)
 FROM accounts;
 ```
 
-# The LENGTH operator 长度
+## The LENGTH operator 长度
 ``` sql
 SELECT LENGTH(website)
 FROM accounts;
 ```
 
-# The SUBSTR operator 截取一部分
+## The SUBSTR operator 截取一部分
 SUBSTR(TEXT, START, LENGTH)
 ``` sql
 SELECT SUBSTR('ZZX XIXI HAHA', 3,5) AS result;
