@@ -1,18 +1,18 @@
 # Chapter2 The SELECT Statement
 ## The SELECT clause
-AS: set the name of columns.
+AS: set the name of columns
 ``` sql
 USE crmreview;
 
 SELECT id, 
-       10 AS number,                                                                                # 一列叫做number 全是10
-       gloss_qty + poster_qty + 100 AS qty,                                                         # 对原本序列的运算
-       orders.*                                                                                     # orders这个table里的所有列 这点在多个表合并的时候很常用
+       10 AS numbers,                                                                 # 一列叫做number 全是10
+       gloss_qty + poster_qty + 100 AS qty,                                          # 对原本序列的运算
+       orders.*                                                                      # orders这个table里的所有列 这点在多个表合并的时候很常用
 FROM orders
 ```
 
 ## The DISTINCT operator 非重复值
-exclude duplicates.
+exclude duplicates
 ``` sql    
 SELECT DISTINCT total                                                                               # 只有unique的值
 FROM orders
