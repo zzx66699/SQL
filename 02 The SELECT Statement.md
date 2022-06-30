@@ -281,5 +281,33 @@ SELECT STR_TO_DATE('August 10 2017', '%M %d %Y');
 ## The LEAD & LAG operator 关于延后和提前
 LAG(要延后的那一列, 延后的个数) OVER (ORDER BY 要根据什么排列)
 ``` sql
+# 延后joindate那一列
 
+SELECT LAG(JoiningDate,1) OVER (ORDER BY JoiningDate) AS EndDate
+FROM employee;
 ```
+![图片1](https://user-images.githubusercontent.com/105503216/176591920-dd07fae2-f1ee-4b9e-a40b-48a667310390.png)  
+延后补齐的东西默认为null，但是也可以自己设置
+``` sql
+SELECT *, LAG(JoiningDate, 1, ‘1999-09-01’) OVER (ORDER BY JoiningDate) AS EndDate
+FROM employee;
+```
+还有延后两个的 如果只写一个补齐的值 那么两个位置都是那个值
+``` sql
+SELECT *, LAG(JoiningDate, 2, ‘1999-09-01’) OVER (ORDER BY JoiningDate) AS EndDate
+FROM employee;
+```
+![图片2](https://user-images.githubusercontent.com/105503216/176592475-7d71949d-aa1a-4348-8c53-2bb882959efd.png)  
+lead同理
+![图片3](https://user-images.githubusercontent.com/105503216/176592545-8e4b2d63-30e7-4350-9986-5bc4fa2b294b.png)  
+还可以和PARTITION BY结合进行分组延后
+``` sql
+# in each year, lag 1 in NextQuarterSales, fill null with 0 
+
+SELECT *, LAG(NextQuarterSales, 1, 0) OVER (PARTITION  BY Year ORDER BY Year, Quarter) AS LastQuarterSales
+FROM ProductSales
+ORDER BY Year, Quarter;
+```
+![图片4](https://user-images.githubusercontent.com/105503216/176593369-5e499468-5b81-40c9-83ee-c117cf2f1372.png)  
+![图片5](https://user-images.githubusercontent.com/105503216/176593406-671fbb90-9f61-4253-9a04-77f961279439.png)  
+
