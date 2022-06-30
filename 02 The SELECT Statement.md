@@ -255,18 +255,31 @@ year
 ```
 ### 转化
 从标准化时间/日期变成任意格式的时间/日期  
-DATE_FORMAT(日期, '形式')  
-TIME_FORMAT(时间, '形式')
+DATE_FORMAT(日期, '想要变成的形式')  
+TIME_FORMAT(时间, '想要变成的形式')
 ``` sql
 SELECT DATE_FORMAT(NOW(), '%M %d %Y') AS date,
        TIME_FORMAT(NOW(), '%H:%i %p') AS time;
 ```
 ![图片11](https://user-images.githubusercontent.com/105503216/176400565-a2907273-9667-4f92-94a3-2cd785d075b2.png)  
 
-从任意格式的时间变成标准化时间：CAST(时间 AS DATE)
+从任意格式的时间变成标准化时间：  
+1. CAST(时间 AS DATE)
 ``` sql
 # change '01/21/2014 08:00:00' into ‘2014-01-21’
 
 SELECT '01/21/2014', 
-        CAST
+        CAST(CONCAT(SUBSTR('01/21/2014', 7,4), '-',  
+                    SUBSTR('01/21/2014', 1,2), '-',
+                    SUBSTR('01/21/2014', 4,2)) AS DATE) AS result;
+```
+2. STR_TO_DATE(时间, '原来乱的格式') 会自动转化成sql默认的正确格式 year-month-day
+``` sql
+SELECT STR_TO_DATE('August 10 2017', '%M %d %Y');
+```
+
+## The LEAD & LAG operator 关于延后和提前
+LAG(要延后的那一列, 延后的个数) OVER (ORDER BY 要根据什么排列)
+``` sql
+
 ```
