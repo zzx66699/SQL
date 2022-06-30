@@ -118,7 +118,7 @@ FROM web_events2
 ```
 
 ## The aggregation function 数数最大最小求和平均值方差标准差等
-```
+``` sql
 SELECT COUNT(), 
        MAX(), MIN(), 
        SUM(), 
