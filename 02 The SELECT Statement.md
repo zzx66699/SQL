@@ -302,7 +302,7 @@ lead同理
 ![图片3](https://user-images.githubusercontent.com/105503216/176592545-8e4b2d63-30e7-4350-9986-5bc4fa2b294b.png)  
 还可以和PARTITION BY结合进行分组延后
 ``` sql
-# in each year, lag 1 in NextQuarterSales, fill null with 0 
+# in each year, lag 1 in QuarterSales, fill null with 0 
 
 SELECT *, LAG(NextQuarterSales, 1, 0) OVER (PARTITION  BY Year ORDER BY Year, Quarter) AS LastQuarterSales
 FROM ProductSales
