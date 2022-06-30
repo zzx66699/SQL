@@ -88,6 +88,17 @@ JOIN employee m
     ON e.reports_to = m.employee_id;
 ```
 
+## Cross JOIN
+把表1中的每一行和表2中的每一行combine
+``` sql
+SELECT 
+    c.first_name AS customer,
+    p.name AS product
+FROM customers c
+CROSS JOIN products p
+ORDER BY c.first_name
+```
+
 ## Join Across Databases 在不同的database之间合并
 ``` sql
 # 从sql_inventory这个database中选出products这个table
