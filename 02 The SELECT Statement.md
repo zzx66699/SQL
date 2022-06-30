@@ -222,7 +222,7 @@ ORDER BY account_id, standard_qty;                                              
 ``` sql
 SELECT NOW(), CURDATE(), CURTIME();
 ```
-![图片9](https://user-images.githubusercontent.com/105503216/176394507-27e778a9-e761-4058-b52c-6d93aa8a1dc4.png) 
+![图片9](https://user-images.githubusercontent.com/105503216/176394507-27e778a9-e761-4058-b52c-6d93aa8a1dc4.png)  
 提取秒
 ``` sql
 SELECT SECOND(NOW()) AS second;
