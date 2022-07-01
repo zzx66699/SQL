@@ -55,16 +55,27 @@ TRUNCATE TABLE web_events;
 
 ## Update table
 ### 01 改变行
-改变一行
+#### 改变一行
 ``` sql
 UPDATE orders1
 SET account_id = 1000
 WHERE id = 10;
 ```
+#### 改变多行  
+MySQLWorkbench -> Preferences -> SQL editor(bottom) -> Untick safe update  
+EXERCISE
+``` sql
+# 选择customers这个table中所有point大于3000的customers 
+# 把他们在orders这个table中的comment改成golden customer
 
-改变多行  
-![1](https://user-images.githubusercontent.com/105503216/176135969-c9ae2774-3cf0-4798-b761-d937da68503a.png)  
-使用别的表格中的数据
+UPDATE orders
+SET comment = 'golden customer'
+WHERE customer_id IN              # 注意这里用的是IN哦 表示只要customer = 其中的任意一个值 就可以改变
+(SELECT customer_id 
+FROM customers
+WHERE point > 3000)
+```
+#### 使用别的表格中的数据
 ``` sql
 UPDATE table1
 JOIN table2
