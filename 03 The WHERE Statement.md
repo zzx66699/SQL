@@ -26,11 +26,23 @@ SELECT *
 FROM table
 WHERE points BETWEEN 1000 AND 3000；      # 这个是inclusive的，前后都包含
 ```
-特别注意关于时间的表达 
+### 特别注意关于时间的表达 
+**归根结底 所有纯的日期模式xxxx-xx-xx 事实上都是xxxx-xx-xx 00:00:00的缩写**  
+所以  
+如果原database是纯的日期模式xxxx-xx-xx  
+应该只到2015-12-31 00:00:00
 ``` sql
 SELECT *
 FROM table
-WHERE w.occurred_at BETWEEN '01-01-2015' AND '01-01-2016'；         # 到凌晨0点 这里指的是2015全年
+WHERE w.occurred_at BETWEEN '2015-01-01' AND '2015-12-31'；         # 到凌晨0点 这里指的是2015全年
+```
+但如果原database有了时间 就必须放到后一天 否则最后一天就没有了  
+譬如'2015-12-31 13:01:02' 这个就不包含在 BETWEEN '2015-01-01' AND '2015-12-31' 中  
+所以应该到2016-01-01 00:00:00
+``` sql
+SELECT *
+FROM table
+WHERE w.occurred_at BETWEEN '2015-01-01' AND '2016-01-01'；         # 到凌晨0点 这里指的是2015全年
 ```
 
 ## The IN operator 在一组值中的任意一个
