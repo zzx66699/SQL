@@ -4,7 +4,7 @@
 
 ## Create schema(database)
 ``` sql
-CREATE SCHEMA CRM-review;
+CREATE SCHEMA CRM_review;
 ```
 
 ## Create table
