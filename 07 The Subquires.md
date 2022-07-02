@@ -1,5 +1,27 @@
 # Chapter7 The Subquires
-## Subqueires in SELECT
+## Subqueries in WHERE statement
+``` sql
+# find products that are more expensive than LETTUCE(id=3)
+
+USE sql_inventory;
+
+SELECT product_id, name, unit_price
+FROM products
+WHERE unit_price > (SELECT unit_price FROM products WHERE product_id = 3);
+```
+EXERCISE
+``` sql
+# in sql_hr database, find employees whose earn more than average
+
+USE sql_hr;
+
+SELECT employee_id, first_name, last_name, salary
+FROM employees
+WHERE salary > (SELECT AVG(salary) FROM employees);
+```
+![image](https://user-images.githubusercontent.com/105503216/176987175-149500fc-e2dd-4e11-8c26-74df0df7ba89.png)
+
+## Subqueires in SELECT statement
 按列来看 前面几列已经列好了  
 需要对应着前面几列每一行的值 来生成后面的列每一行的值  
 
