@@ -5,9 +5,9 @@ AS: set the name of columns
 USE crmreview;
 
 SELECT id, 
-       10 AS numbers,                                                                 # 一列叫做number 全是10
-       gloss_qty + poster_qty + 100 AS qty,                                          # 对原本序列的运算
-       orders.*                                                                      # orders这个table里的所有列 这点在多个表合并的时候很常用
+       10 AS numbers,                                                 # 一列叫做number 全是10
+       gloss_qty + poster_qty + 100 AS qty,                           # 对原本序列的运算
+       orders.*                                                       # orders这个table里的所有列 这点在多个表合并的时候很常用
 FROM orders
 ```
 
@@ -211,4 +211,3 @@ ORDER BY Year, Quarter;
 ```
 ![图片4](https://user-images.githubusercontent.com/105503216/176593369-5e499468-5b81-40c9-83ee-c117cf2f1372.png)  
 ![图片5](https://user-images.githubusercontent.com/105503216/176593406-671fbb90-9f61-4253-9a04-77f961279439.png)  
-
