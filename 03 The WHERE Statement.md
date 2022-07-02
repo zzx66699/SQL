@@ -18,6 +18,18 @@ SELECT *
 FROM Customers
 WHERE NOT (birth_date > '1990-01-01' OR points > 1000)     # 注意日期要加''
 ```
+EXERCISE
+``` sql
+# find all the names that stars with 'C' or 'W'
+# primary_poc contains 'ana' or 'Ana'
+# but primary_poc doesn't contain 'eana'
+
+SELECT *
+FROM accounts
+WHERE (name LIKE 'C%' OR name LIKE 'W%') AND                      # 注意多个并列条件的应用 xx和xx是并列
+      (primary_poc LIKE '%ana%' OR primary_poc LIKE '%Ana%') AND
+      primary_poc NOT LIKE '%eana%';
+```
 
 ## The BETWEEN ... AND... operator
 在两个中间 BETWEEN 是大于等于 和 小于等于
@@ -45,14 +57,14 @@ FROM table
 WHERE w.occurred_at BETWEEN '2015-01-01' AND '2016-01-01'；         # 到凌晨0点 这里指的是2015全年
 ```
 
-## The IN operator 在一组值中的任意一个
+## The IN & NOT IN operator 在一组值中的任意一个
 ``` sql
 SELECT *
 FROM products
 WHERE quantity_in_stock IN (49, 38, 72)；
 ```
 
-## The LIKE operator 包含某个值
+## The LIKE & NOT LIKE operator 包含某个值
 注意所有都不区分大小写
 ``` sql
 SELECT *
@@ -73,7 +85,15 @@ SELECT *
 FROM customers
 WHERE last_name LIKE 'a__%';   # 以a开头且至少有三个字符
 ```
-NOT LIKE
+NOT LIKE: 不是 
+``` sql
+# 不以a开头
+
+SELECT * 
+FROM account 
+WHERE last_name NOT LIKE 'a%'
+```
+
 ## The REGEXP operator 正则表达式
 ``` sql
 SELECT *
