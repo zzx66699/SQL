@@ -121,7 +121,7 @@ SELECT COUNT(*) AS total_events,
        LEFT(occurred_at, 10) AS day, 
        channel   
 FROM web_events
-GROUP BY account_id, day) sub       # 子句中 每一行就是每一天
+GROUP BY channel, day) sub       # 子句中 每一行就是每一天
 GROUP BY channel;
 
 # 也可以使用WITH语句 写法相似
