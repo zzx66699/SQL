@@ -9,7 +9,7 @@ SELECT product_id, name, unit_price
 FROM products
 WHERE unit_price > (SELECT unit_price FROM products WHERE product_id = 3);
 ```
-EXERCISE
+EXERCISE1
 ``` sql
 # in sql_hr database, find employees whose earn more than average
 
@@ -19,8 +19,17 @@ SELECT employee_id, first_name, last_name, salary
 FROM employees
 WHERE salary > (SELECT AVG(salary) FROM employees);
 ```
-![image](https://user-images.githubusercontent.com/105503216/176987175-149500fc-e2dd-4e11-8c26-74df0df7ba89.png)
+![image](https://user-images.githubusercontent.com/105503216/176987175-149500fc-e2dd-4e11-8c26-74df0df7ba89.png)  
+EXERCISE2
+``` sql
+# find out all the orders that occurs in the latest month and compute the average orders
 
+SELECT AVG(total), AVG(total_amt_usd)
+FROM orders
+WHERE MONTH(occurred_at) = 
+(SELECT MIN(MONTH(occurred_at))     # 注意MIN,MAX这种aggregation function不能直接放在where里面 必须用subquery
+FROM orders);
+```
 ## Subqueires in SELECT statement
 按列来看 前面几列已经列好了  
 需要对应着前面几列每一行的值 来生成后面的列每一行的值  
