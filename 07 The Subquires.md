@@ -106,3 +106,19 @@ SELECT 'First half of 2019' AS data_range,
 FROM invoices
 WHERE invoice_date BETWEEN '2019-01-01' AND '2019-06-30';
 ```
+
+## Subqueries in FROM statement
+``` sql
+# Find the average number of events for each channel per day. 
+# 每个channel，说明各个channel是分开的。
+# 每天平均的event数量，说明要用总的event数量/DISTINCT的天数
+
+USE crmreview;
+
+SELECT channel, AVG(total_events) AS average_events
+FROM (
+SELECT COUNT(*) AS total_events, LEFT(occurred_at, 10) AS day, channel    # 子句中 每一行就是每一天
+FROM web_events
+GROUP BY account_id, day) sub
+GROUP BY channel;
+```
