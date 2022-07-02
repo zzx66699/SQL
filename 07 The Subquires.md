@@ -117,8 +117,31 @@ USE crmreview;
 
 SELECT channel, AVG(total_events) AS average_events
 FROM (
-SELECT COUNT(*) AS total_events, LEFT(occurred_at, 10) AS day, channel    # 子句中 每一行就是每一天
+SELECT COUNT(*) AS total_events, 
+       LEFT(occurred_at, 10) AS day, 
+       channel   
 FROM web_events
-GROUP BY account_id, day) sub
+GROUP BY account_id, day) sub       # 子句中 每一行就是每一天
+GROUP BY channel;
+
+# 也可以使用WITH语句 写法相似
+WITH sub AS(
+SELECT COUNT(*) AS total_events,
+       channel
+FROM web_events
+GROUP BY channel, LEFT(occurred_at, 10))
+SELECT channel, AVG(total_events)
+FROM sub
 GROUP BY channel;
 ```
+
+## The WITH operation
+``` sql
+WITH table1 as (SELECT * FROM web_events),
+     table2 as (SELECT * FROM accounts)
+SELECT *
+FROM table1
+JOIN table2
+ON table1.account_id = table2.id;
+```
+
