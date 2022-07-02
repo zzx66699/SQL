@@ -2,13 +2,12 @@
 ## Subqueires in SELECT
 按列来看 前面几列已经列好了  
 需要对应着前面几列每一行的值 来生成后面的列每一行的值  
-表client表是  
-![image](https://user-images.githubusercontent.com/105503216/176984049-b71f1ebd-21e8-4663-8959-03c337cb4d58.png)  
-表invoices是  
-![image](https://user-images.githubusercontent.com/105503216/176984413-2e9205c3-aace-4b25-859c-51b947faa42b.png)  
 
 EXERCISE1  
 ![image](https://user-images.githubusercontent.com/105503216/176984376-433c81f3-c434-4f1b-bf2e-ce2d226120b3.png)  
+其中表invoices是  
+![image](https://user-images.githubusercontent.com/105503216/176984413-2e9205c3-aace-4b25-859c-51b947faa42b.png)  
+
 ``` sql
 SELECT invoice_id, invoice_total,
        (SELECT AVG(invoice_total) FROM invoices) AS invoice_average,   # 子句返回的是一个数
@@ -45,19 +44,35 @@ FROM invoices;
 
 EXERCISE2  
 ![image](https://user-images.githubusercontent.com/105503216/176983376-db301420-2678-4552-a306-7e334b318efd.png)  
+表client表是  
+![image](https://user-images.githubusercontent.com/105503216/176984049-b71f1ebd-21e8-4663-8959-03c337cb4d58.png)  
 ``` sql
-# 对于client这个表，求出每个client的total_sales，所有clients的total_sales均值，以及他们的差
+# 求出client这个表里每个client的total_sales，所有clients的total_sales均值，以及他们的差
 
-SELECT client_id, 
-       name, 
-	(SELECT SUM(invoice_total) 
-        FROM invoices i
-        WHERE i.client_id = c.client_id) AS total_sales,      # 这里是给这个子句一个alias
-        (SELECT AVG(invoice_total) FROM invoices) AS average,
-	(SELECT total_sales - average) AS difference
-FROM clients c;
+SELECT client_id, name, 
+       SUM(invoice_total) AS total_invoice,
+       (SELECT AVG(invoice_total) FROM invoices) AS average,
+       SUM(invoice_total) - (SELECT(average)) AS difference
+FROM clients 
+LEFT JOIN invoices using (client_id)
+GROUP BY client_id
+ORDER BY client_id;
 ```
 ![image](https://user-images.githubusercontent.com/105503216/176984057-627bb133-c486-4643-9884-e61e014695a8.png)  
+Code in the video  
+``` sql
+USE sql_invoicing;
+
+SELECT
+    c.client_id,
+    name,
+    (SELECT SUM(invoice_total)                            # 这一步很奇怪
+	FROM invoices
+        WHERE client_id = c.client_id) AS total_sales,
+    (SELECT AVG(invoice_total) FROM invoices) AS average,
+    (SELECT total_sales - average) AS difference          # 主要注意这种两个subquery的写法
+FROM clients c
+```
 **特别注意**   
 以下代码错误 是因为SUM(invoice_total)和SUM(payment_total)本身不是子句  
 所以无法通过加（SELECT ）转化成子句
