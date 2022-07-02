@@ -18,6 +18,12 @@ SELECT first_name, last_name, 10 + 1 AS points
 FROM customers
 ORDER BY points, first_name
 ```
+甚至可以用math expression来排序
+``` sql
+SELECT 10 AS number
+FROM customers
+ORDER BY number, quantity*number
+```
 ## LIMIT
 Use offset to obtain a certain range of data
 ``` sql
