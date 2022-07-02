@@ -98,6 +98,25 @@ FROM customers c
 CROSS JOIN products p
 ORDER BY c.first_name
 ```
+One of the most common use cases for self JOINs is in cases where two events occurred, one after another.   
+在同一个表中 的两个时间 相距不超过xx天  
+EXERCISE:
+``` sql
+# Find out 同一个account的orders that come within 28 days 一对一对的形式出现
+
+ SELECT o1.id AS o1_id,
+       o1.account_id AS o1_account_id,
+       o1.occurred_at AS o1_occurred_at,
+       o2.id AS o2_id,
+       o2.account_id AS o2_account_id,
+       o2.occurred_at AS o2_occurred_at
+FROM orders o1
+LEFT JOIN orders o2 
+ON o1.account_id = o2.account_id
+AND o2.occurred_at > o1.occurred_at
+AND o2.occurred_at <= o1.occurred_at + INTERVAL '28 days'
+ORDER BY o1.account_id, o1.occurred_at
+```
 
 ## Join Across Databases 在不同的database之间合并
 ``` sql
