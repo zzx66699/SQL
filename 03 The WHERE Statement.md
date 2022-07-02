@@ -65,9 +65,15 @@ _ indicates a single character 有几个_就代表有几个字符
 ``` sql
 SELECT *
 FROM Customers
-WHERE last_name LIKE '_____y'
+WHERE last_name LIKE '_____y';
 ```
-
+至少有x个字符 _和%一起使用
+``` sql
+SELECT *
+FROM customers
+WHERE last_name LIKE 'a__%';   # 以a开头且至少有三个字符
+```
+NOT LIKE
 ## The REGEXP operator 正则表达式
 ``` sql
 SELECT *
@@ -82,17 +88,21 @@ SELECT *
 FROM Customers
 WHERE last_name REGEXP 'field$|^mac|rose'     
 ```
-[] provides a option of a series of letters 一系列字符
+[] provides a option of a series of letters 只要包含一系列字符 不一定要完全一样  
+其中try是  
+![image](https://user-images.githubusercontent.com/105503216/176995411-dd4b5e99-b20a-4123-9183-e1408e926211.png)
 ``` sql
 SELECT *
-FROM Customers
-WHERE last_name REGEXP '[gim]e'     # to match ge, ie, me
+FROM try
+WHERE characters REGEXP '[as]t';     # to include at or st
 ```
-[] can also represents a range of letters 从xx到xx的字符
+![image](https://user-images.githubusercontent.com/105503216/176995422-79c13137-ff7c-498d-9f15-130e80916354.png)  
+
+[] can also represents a range of letters 从xx到xx的字符 依然是包含就可以
 ``` sql
 SELECT *
 FROM Customers
-WHERE last_name REGEXP '[a-h]e'     # [a-h] represents letter a to h
+WHERE last_name REGEXP '[a-h]e' ;    # [a-h] represents letter a to h 可以是ae到he中的任意一个
 ```
 
 ## The IS NULL & IS NOT NULL operator
