@@ -1,28 +1,71 @@
 # Chapter7 The Subquires
 ## Subqueires in SELECT
 按列来看 前面几列已经列好了  
-需要对应着前面几列每一行的值 来生成后面的列每一行的值
-EXERCISE1  
-![image](https://user-images.githubusercontent.com/105503216/176983376-db301420-2678-4552-a306-7e334b318efd.png)  
-其中client表是  
+需要对应着前面几列每一行的值 来生成后面的列每一行的值  
+表client表是  
 ![image](https://user-images.githubusercontent.com/105503216/176984049-b71f1ebd-21e8-4663-8959-03c337cb4d58.png)  
 表invoices是  
-![image](https://user-images.githubusercontent.com/105503216/176984413-2e9205c3-aace-4b25-859c-51b947faa42b.png)
+![image](https://user-images.githubusercontent.com/105503216/176984413-2e9205c3-aace-4b25-859c-51b947faa42b.png)  
+
+EXERCISE1  
+![image](https://user-images.githubusercontent.com/105503216/176984376-433c81f3-c434-4f1b-bf2e-ce2d226120b3.png)  
 ``` sql
-# 对于client这个表，求出每个client的total_sales，所有clientd的total_sales均值，以及他们的差
+SELECT invoice_id, invoice_total,
+       (SELECT AVG(invoice_total) FROM invoices) AS invoice_average,   # 子句返回的是一个数
+       invoice_total - (SELECT invoice_average) AS difference          # (SELECT invoice_average)就是把这个整个作为一个子句
+FROM invoices;
+
+# 相当于
+SELECT invoice_id, invoice_total,
+       (SELECT AVG(invoice_total) FROM invoices) AS invoice_average,   
+       invoice_total - (SELECT AVG(invoice_total) FROM invoices) AS difference         
+FROM invoices;
+```
+**特别注意**  
+1.由于AVG()是聚合函数 所以如果直接使用AVG会只输出一行
+``` sql
+SELECT invoice_id, invoice_total,
+       AVG(invoice_total) AS invoice_average
+FROM invoices;
+```
+![image](https://user-images.githubusercontent.com/105503216/176984889-b8f56a50-f749-4230-9983-87cf1459c81c.png)  
+此时可以使用GROUP BY来进行分组 但非常麻烦  
+2.在表达式中不可以使用列的别名 所以以下是错误的
+``` sql
+SELECT invoice_id, invoice_total,
+       (SELECT AVG(invoice_total) FROM invoices) AS invoice_average,   
+       invoice_total - invoice_average AS difference         
+FROM invoices;
+```
+3.(SELECT invoice_average)就好了   
+(SELECT invoice_average FROM invoices)会报错  
+原话是：invoice_average是一个列名  
+(invoice_average)是一个子句  
+在前面加上SELECT就好 (SELECT invoice_average)
+
+EXERCISE2  
+![image](https://user-images.githubusercontent.com/105503216/176983376-db301420-2678-4552-a306-7e334b318efd.png)  
+``` sql
+# 对于client这个表，求出每个client的total_sales，所有clients的total_sales均值，以及他们的差
 
 SELECT client_id, 
        name, 
 	(SELECT SUM(invoice_total) 
         FROM invoices i
         WHERE i.client_id = c.client_id) AS total_sales,      # 这里是给这个子句一个alias
-       (SELECT AVG(invoice_total) FROM invoices) AS average,
+        (SELECT AVG(invoice_total) FROM invoices) AS average,
 	(SELECT total_sales - average) AS difference
 FROM clients c;
 ```
 ![image](https://user-images.githubusercontent.com/105503216/176984057-627bb133-c486-4643-9884-e61e014695a8.png)  
-EXERCISE2  
-![image](https://user-images.githubusercontent.com/105503216/176984376-433c81f3-c434-4f1b-bf2e-ce2d226120b3.png)  
+**特别注意**   
+以下代码错误 是因为SUM(invoice_total)和SUM(payment_total)本身不是子句  
+所以无法通过加（SELECT ）转化成子句
 ``` sql
-
+SELECT 'First half of 2019' AS data_range, 
+        SUM(invoice_total) AS total_sales,
+        SUM(payment_total) AS total_payments,
+        (SELECT total_sales - total_payments) AS what_we_expect   
+FROM invoices
+WHERE invoice_date BETWEEN '2019-01-01' AND '2019-06-30';
 ```
