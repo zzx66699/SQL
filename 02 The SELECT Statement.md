@@ -178,7 +178,11 @@ SELECT '01/21/2014',
 ``` sql
 SELECT STR_TO_DATE('August 10 2017', '%M %d %Y');
 ```
-
+### 间隔
+``` sql
+SELECT occurred_at + INTERVAL '28 days'    # 间隔28days
+FROM orders
+```
 ## The LEAD & LAG operator 关于延后和提前
 LAG(要延后的那一列, 延后的个数) OVER (ORDER BY 要根据什么排列)
 ``` sql
