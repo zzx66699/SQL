@@ -1,9 +1,19 @@
 # Chapter3 The WHERE Statement
-## 等于某个值
+## = & != 
 ``` sql
 SELECT *
 FROM table1
 WHERE state = 'VA'
+```
+注意这里只能判断非NULL的值 会自动舍去NULL的值  
+所以如果想要保留NULL的值
+``` sql
+# select all the names that are not referred by the customer with id = 2
+# 只要不是2都可以 就算是NULL也可以
+
+SELECT name
+FROM customer
+WHERE referee_id != 2 OR referee_id IS NULL;
 ```
 
 ## The AND & OR & NOT operater
