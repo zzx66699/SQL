@@ -52,7 +52,7 @@ HAVING COUNT(*) > 6;         # HAVING可以直接筛选分组之后的 因为这
 ```
 
 ## 3
--- Provide the name of the sales_rep in each region with the largest total amount of total_amt_usd sales.
+Provide the name of the sales_rep in each region with the largest total amount of total_amt_usd sales.
 ``` sql
 USE crm_review;
 WITH sub AS
@@ -91,4 +91,94 @@ SELECT region_name, sales_rep, total_amount
 FROM sub2                          # 所以这里必须新建一个sub2 在sub2里取WHERE 
 WHERE ranks = 1                    # 这样一来无论取第几名都可以了
 ORDER BY total_amount DESC;
+```
+
+## 4
+find the total amount for each individual order that was spent on standard and gloss paper in the orders table  
+this should give a dollar amount for each order in the table
+``` sql
+SELECT id, standard_amt_usd + gloss_amt_usd AS total_amount
+FROM orders;
+```
+
+## 5
+For the region with the largest sales total_amt_usd, how many total orders were placed?
+``` sql
+SELECT r.name AS region_name, SUM(o.total_amt_usd) AS total_amount, COUNT(*) AS number_of_orders
+FROM region r
+JOIN sales_reps s
+ON r.id = s.region_id
+JOIN accounts a 
+ON a.sales_rep_id = s.id
+JOIN orders o
+ON o.account_id = a.id
+GROUP BY 1
+ORDER BY 2 DESC
+LIMIT 1;
+```
+
+## 6
+For the account that purchased the most (in total over their lifetime as a customer) standard_qty paper,   
+how many accounts still had more in total purchases?
+``` sql
+WITH sub AS                                       # sub是一个包含所有sum(total) 比standard_qty最大的那个account 大 的account和sum(total)
+(SELECT a.name AS name, SUM(o.total) AS total     # 注意 这里如果写* 会出现有重复id的问题 在sub里面运行没问题 但是一旦要count 就会报错
+FROM accounts a
+JOIN orders o
+ON a.id = o.account_id
+GROUP BY a.name 
+HAVING SUM(o.total) >
+(SELECT SUM(o.total)
+FROM accounts a
+JOIN orders o
+ON a.id = o.account_id
+GROUP BY a.name
+ORDER BY SUM(o.standard_qty) DESC
+LIMIT 1))
+SELECT COUNT(*) AS number
+FROM sub;
+```
+
+## 7
+What is the lifetime average amount spent in terms of total_amt_usd for the top 10 total spending accounts?  
+``` sql
+WITH sub AS
+(SELECT SUM(total_amt_usd) AS amount
+FROM orders
+GROUP BY account_id
+ORDER BY 1 DESC
+LIMIT 10)
+SELECT AVG(amount)
+FROM sub;
+```
+
+## 8
+What is the lifetime average amount spent in terms of total_amt_usd,   
+including only the companies that spent more per order, on average, than the average of all orders.
+``` sql
+WITH sub AS
+(SELECT AVG(total_amt_usd) AS total
+FROM orders
+GROUP BY account_id
+HAVING AVG(total_amt_usd) >
+(SELECT AVG(total_amt_usd)
+FROM orders))
+SELECT AVG(total) AS lifetime_average_amount
+FROM sub;
+```
+
+## 9
+Display the number of orders in each of three categories,   
+base on the total number of items in each order.   
+The 3 categories are: ‘At least 2000’, ‘Between 1000 and 2000’, ‘Less than 1000’.
+``` sql
+WITH sub AS
+(SELECT CASE WHEN total < 100 THEN 'Less than 1000'
+            WHEN total > 2000 THEN 'At least 2000'
+            ELSE 'Between 1000 and 2000'
+	   END AS 'category'
+FROM orders)
+SELECT category, COUNT(*)
+FROM sub
+GROUP BY category;
 ```
