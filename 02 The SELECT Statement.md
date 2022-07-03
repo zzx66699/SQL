@@ -42,7 +42,20 @@ FROM orders
 SELECT LEFT(name, 3)        # 取name这一列每一行值的前3个字符
 FROM accounts;
 ```
-
+由于出来的是字符串 所以即使看起来是数字也要加''
+``` sql
+SELECT a.name, 
+       CASE WHEN LEFT(a.name,1) IN ('1','2','3','4','5','6','7','8','9','0') THEN 'number'
+            ELSE 'letter'
+       END AS group
+FROM accounts;
+```
+关于名字 first_name和last_name
+``` sql
+SELECT LEFT(primary_poc, STRPOS(primary_poc,' ')-1) AS 'first_name',
+       RIGHT(primary_poc, LENGTH(primary_poc)-STRPOS(primary_poc, ' ')) AS 'last_name'
+FROM accounts;
+```
 ## The STRPOS & POSITION operator 位置
 返回在a里b的index：STRPOS(a,b) 或者 POSITION(B IN A)
 ``` sql
@@ -93,6 +106,11 @@ SELECT REPLACE('ZZX','X','Z') AS result;
 ---
 result
 ZZZ
+```
+常用于删去某个值 譬如空格
+``` sql
+SELECT REPLACE(name, ' ','') AS result
+FROM account;
 ```
 
 ## The CONCAT & || operator 连结
