@@ -93,6 +93,13 @@ SELECT *
 FROM account 
 WHERE last_name NOT LIKE 'a%'
 ```
+EXAMPLE: 姓以xx开头
+``` sql
+SELECT *
+FROM accounts
+WHERE s.name LIKE '% K%'           # 注意这里有一个空格！！！表示姓！！
+```
+
 
 ## The REGEXP operator 正则表达式
 ``` sql
