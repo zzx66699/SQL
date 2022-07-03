@@ -167,18 +167,22 @@ SELECT AVG(total) AS lifetime_average_amount
 FROM sub;
 ```
 
-## 9
-Display the number of orders in each of three categories,   
-base on the total number of items in each order.   
-The 3 categories are: ‘At least 2000’, ‘Between 1000 and 2000’, ‘Less than 1000’.
+## 9 
+某网站包含两个表，Customers 表和 Orders 表。编写一个 SQL 查询，找出所有从不订购任何东西的客户。  
+![image](https://user-images.githubusercontent.com/105503216/177033392-c474a683-2d4f-448a-ae97-af1a38040c5a.png)
 ``` sql
-WITH sub AS
-(SELECT CASE WHEN total < 100 THEN 'Less than 1000'
-            WHEN total > 2000 THEN 'At least 2000'
-            ELSE 'Between 1000 and 2000'
-	   END AS 'category'
-FROM orders)
-SELECT category, COUNT(*)
-FROM sub
-GROUP BY category;
+SELECT Name AS Customers
+FROM Customers
+WHERE Id NOT IN (SELECT CustomerId FROM Orders);
+```
+或者
+``` sql
+SELECT c.Name AS Customers
+FROM Customers c
+LEFT JOIN Orders o
+ON o.CustomerId = c.Id
+WHERE o.CustomerId IS NULL
+```
+![image](https://user-images.githubusercontent.com/105503216/177033404-6fa73126-9ea9-4cc1-963b-eb1a9fca49fb.png)
+
 ```
