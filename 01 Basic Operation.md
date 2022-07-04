@@ -61,6 +61,14 @@ UPDATE orders1
 SET account_id = 1000
 WHERE id = 10;
 ```
+EXAMPLE: 性别互换
+``` sql
+UPDATE Salary
+SET sex = 
+	CASE sex 
+		WHEN 'm' THEN 'f'
+		ELSE 'm' END;
+```
 #### 改变多行  
 MySQLWorkbench -> Preferences -> SQL editor(bottom) -> Untick safe update  
 EXERCISE
