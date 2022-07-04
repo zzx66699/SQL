@@ -24,6 +24,13 @@ ON a.id = w.account_id
 WHERE a.id = 1001;
 ```
 
+## The MOD() operator 求余数
+``` sql
+SELECT MOD(5,2);
+
+---
+1
+```
 ## The CASE WHEN ... THEN ... operator 条件
 ``` sql
 SELECT CASE WHEN total_amount > 3000 THEN 'large'                                                   # 只有一次WHEN
