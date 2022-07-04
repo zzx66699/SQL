@@ -185,4 +185,34 @@ WHERE o.CustomerId IS NULL
 ```
 ![image](https://user-images.githubusercontent.com/105503216/177033404-6fa73126-9ea9-4cc1-963b-eb1a9fca49fb.png)
 
+## 10
+交换性别 f变成m m变成f
+``` sql
+# IF 语句
+UPDATE Salary
+SET sex = IF(sex = 'f','m','f');
+
+# CASE WHEN语句
+UPDATE Salary
+SET sex = 
+	CASE sex 
+		WHEN 'm' THEN 'f'
+		ELSE 'm' END;
 ```
+
+## 11
+编写一个 SQL 删除语句来 删除 所有重复的电子邮件，只保留一个id最小的唯一电子邮件
+``` sql
+# 写法1
+DELETE FROM Person
+WHERE id NOT IN (
+    SELECT * 
+    FROM (
+        SELECT MIN(id) AS id
+        FROM Person
+        GROUP BY email
+        ) a
+);
+```
+注意：MYSQL不给update to a table when you are also using that same table in an inner select as your update criteria.  
+所以必须再SELECT一次
