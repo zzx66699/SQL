@@ -216,3 +216,26 @@ WHERE id NOT IN (
 ```
 注意：MYSQL不给update to a table when you are also using that same table in an inner select as your update criteria.  
 所以必须再SELECT一次
+
+## 12
+![image](https://user-images.githubusercontent.com/105503216/177291384-8d48f5ea-e6b4-4fef-8cff-eefd95eeb711.png)
+![image](https://user-images.githubusercontent.com/105503216/177291456-991a8d37-ae50-407f-8363-cf5bed6204b9.png)
+
+``` sql
+WITH sub1 AS
+(SELECT caller_id AS id, duration
+FROM Calls
+UNION ALL
+SELECT callee_id AS id, duration
+FROM Calls
+)
+SELECT 
+    c.name AS country
+FROM sub1
+JOIN Person p
+ON sub1.id = p.id
+JOIN Country c
+ON c.country_code = LEFT(p.phone_number,3) 
+GROUP BY c.name
+HAVING AVG(duration) > (SELECT AVG(duration) FROM Calls)
+```
