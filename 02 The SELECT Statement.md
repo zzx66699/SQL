@@ -105,7 +105,7 @@ result
 X XIX
 ```
 
-# The TRUNC operator保留几位小数
+## The TRUNC operator 保留几位小数
 ``` sql
 SELECT 
     TRUNC(AVG(revenue)
