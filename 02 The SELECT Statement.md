@@ -105,6 +105,15 @@ result
 X XIX
 ```
 
+# The TRUNC operator保留几位小数
+``` sql
+SELECT 
+    TRUNC(AVG(revenue)
+        OVER(ORDER BY date_time ROWS BETWEEN 15 PRECEDING AND CURRENT ROW), 2)     # round 2 decimal places
+        AS moving_average
+FROM stock_values;
+```
+
 ## The REPLACE operator 代替
 用b替换a：REPLACE(TEXT,A,B)
 ``` sql
