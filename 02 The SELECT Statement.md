@@ -104,7 +104,13 @@ SELECT SUBSTR('ZZX XIXI HAHA', 3,5) AS result;
 result
 X XIX
 ```
+如果不加LENGTH 默认取到结尾
+``` sql
+SELECT SUBSTR('ASDFGH',2);
 
+---
+SDFGH
+```
 ## The TRUNC operator 保留几位小数
 ``` sql
 SELECT 
