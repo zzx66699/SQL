@@ -239,3 +239,95 @@ ON c.country_code = LEFT(p.phone_number,3)
 GROUP BY c.name
 HAVING AVG(duration) > (SELECT AVG(duration) FROM Calls)
 ```
+
+## 13
+![image](https://user-images.githubusercontent.com/105503216/177466738-e55666cc-9eeb-4591-806b-2b98787c7e58.png)
+![image](https://user-images.githubusercontent.com/105503216/177466764-c0f77aff-b979-47c0-962a-a2996ffab907.png)
+![image](https://user-images.githubusercontent.com/105503216/177466780-7923fd9b-7656-4352-b517-91e387b9b6e8.png)
+``` sql
+-- 方法1 LEFT JOIN 合并
+-- 注意SQL里面没有全连接
+SELECT e.employee_id
+FROM Employees e
+LEFT JOIN Salaries s USING (employee_id)
+WHERE s.salary IS NULL
+
+UNION
+
+SELECT s.employee_id
+FROM Salaries s
+LEFT JOIN Employees e USING (employee_id)
+WHERE e.name is NULL
+
+ORDER BY employee_id
+
+-- 方法2 WHERE IN
+SELECT employee_id
+FROM Employees 
+WHERE employee_id NOT IN (SELECT employee_id FROM Salaries)
+
+UNION
+
+SELECT employee_id
+FROM Salaries
+WHERE employee_id NOT IN (SELECT employee_id FROM Employees)
+
+ORDER BY employee_id
+```
+
+## 14
+![image](https://user-images.githubusercontent.com/105503216/177469684-37fbda74-159c-4915-b8f8-42df8ce84ddb.png)
+``` sql
+SELECT product_id, 'store1' AS store, store1 AS price
+FROM Products
+WHERE store1 IS NOT NULL
+UNION
+SELECT product_id, 'store2' AS store, store2 AS price
+FROM Products
+WHERE store2 IS NOT NULL
+UNION
+SELECT product_id, 'store3' AS store, store3 AS price
+FROM Products
+WHERE store3 IS NOT NULL
+```
+
+## 15
+![image](https://user-images.githubusercontent.com/105503216/177519237-27da39fc-19f5-463f-84fa-2c1a3463af59.png)
+``` sql
+# for odds
+SELECT s1.id, 
+    CASE 
+        WHEN MOD((SELECT COUNT(*) FROM Seat),2)=1 AND    # 这里注意下表述 不可以直接写MOD(COUNT(*),2) 因为后面的WHERE已经改变了序列
+            s1.id = (SELECT COUNT(*) FROM Seat) THEN 
+	    	s1.student
+        ELSE s2.student
+    END AS student
+FROM Seat s1
+LEFT JOIN Seat s2
+ON s1.id = s2.id - 1
+WHERE MOD(s1.id,2) = 1
+
+UNION
+
+# for even
+SELECT s1.id, s2.student AS student
+FROM Seat s1
+JOIN Seat s2
+ON s1.id = s2.id + 1
+WHERE MOD(s1.id,2) = 0
+ORDER BY id
+
+-- 当用WHERE分类再用UNION合并的写法成立时 可以考虑一下CASE WHEN ... THEN ... 有相同的效应
+-- 而且不是一定要JOIN 才可以取另外一个表的值
+SELECT s1.id, 
+    CASE 
+        WHEN MOD(s1.id,2) = 0 THEN 
+            (SELECT s2.student FROM Seat s2 WHERE s2.id = s1.id - 1)
+        WHEN MOD(s1.id,2)=1 AND s1.id = (SELECT MAX(id) FROM Seat) THEN 
+            s1.student
+        ELSE (SELECT s2.student FROM Seat s2 WHERE s2.id = s1.id + 1)
+    END AS student
+FROM Seat s1
+ORDER BY s1.id;
+```
+
