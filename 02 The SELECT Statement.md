@@ -135,7 +135,7 @@ SELECT REPLACE(name, ' ','') AS result
 FROM account;
 ```
 
-## The CONCAT & || operator 连结
+## The CONCAT operator 连结
 ``` sql
 SELECT CONCAT('Z','Z','X') AS result;
 
@@ -143,7 +143,18 @@ SELECT CONCAT('Z','Z','X') AS result;
 result
 ZZX    
 ```
-
+GROUP_CONCAT 分组连接  
+![image](https://user-images.githubusercontent.com/105503216/177463689-66c091ef-dc9d-4bea-9577-45a5252e1a99.png)
+![image](https://user-images.githubusercontent.com/105503216/177463716-a3f33d4f-047f-44de-9f66-70a2f75341ba.png)
+![image](https://user-images.githubusercontent.com/105503216/177463776-44d0cc9a-3444-491e-90fc-3dc6e355914b.png)
+``` sql
+SELECT sell_date,
+    COUNT(DISTINCT product) AS num_sold, 
+    GROUP_CONCAT(DISTINCT product ORDER BY product separator ',') AS products  # separator ',' 指用','连接
+FROM Activities
+GROUP BY sell_date
+ORDER BY sell_date;
+```
 ## The UNION operator 两个表格行的合并
 rbind合并两个select之后的table  
 UNION（会删去重复的行）或者UNION ALL（这个不会删去重复的行）
