@@ -31,6 +31,7 @@ SELECT *
 FROM customers
 LIMIT 6, 3         # 前6位不要，从第7位开始，取3个值，getting records 7-9)
 ```
+EXAMPLE:  
 ![image](https://user-images.githubusercontent.com/105503216/177524032-12f9cc7b-4766-425a-8e68-c3f3b9728cc5.png)
 ``` sql
 SELECT 
