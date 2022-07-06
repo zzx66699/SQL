@@ -43,7 +43,17 @@ SELECT CASE WHEN total_amount > 3000 THEN 'large'                               
        END AS order_category,
 FROM orders
 ```
-
+EXAMPLE:  
+![image](https://user-images.githubusercontent.com/105503216/177506029-3b84789c-d5f6-459e-a9a4-4105d4b73419.png)
+``` sql
+SELECT id,
+    CASE 
+        WHEN p_id IS NULL THEN 'Root'
+        WHEN id IN (SELECT p_id FROM tree) THEN 'Inner'
+        ELSE 'Leaf'
+    END AS Type
+FROM tree
+```
 ## The RIGHT & LEFT operator 左右取值
 ``` sql
 SELECT LEFT(name, 3)        # 取name这一列每一行值的前3个字符
@@ -166,6 +176,22 @@ UNION ALL
 
 SELECT *
 FROM web_events2
+```
+UNION之后可以直接排序 把两个一起排序
+``` sql
+SELECT e.employee_id AS employee_id
+FROM Employees e
+LEFT JOIN Salaries s USING (employee_id)
+WHERE s.salary IS NULL
+
+UNION 
+
+SELECT s.employee_id AS employee_id
+FROM Employees e
+RIGHT JOIN Salaries s USING (employee_id)
+WHERE e.name IS NULL
+
+ORDER BY employee_id;
 ```
 
 ## The date function 关于日期
