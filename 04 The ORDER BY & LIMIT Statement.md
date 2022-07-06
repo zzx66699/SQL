@@ -31,3 +31,16 @@ SELECT *
 FROM customers
 LIMIT 6, 3         # 前6位不要，从第7位开始，取3个值，getting records 7-9)
 ```
+![image](https://user-images.githubusercontent.com/105503216/177524032-12f9cc7b-4766-425a-8e68-c3f3b9728cc5.png)
+``` sql
+SELECT 
+    CASE
+        WHEN COUNT(DISTINCT salary) = 1 THEN NULL  # NULL不要加''   
+        ELSE
+            (SELECT DISTINCT salary 
+             FROM Employee
+             ORDER BY salary DESC
+             LIMIT 1,1)                            # 倒数第二大
+    END AS SecondHighestSalary
+FROM Employee;
+```
