@@ -331,3 +331,15 @@ FROM Seat s1
 ORDER BY s1.id;
 ```
 
+## 16
+现在运营想要了解2021年8月份所有练习过题目的总用户数和练习过题目的总次数，请取出相应结果  
+![image](https://user-images.githubusercontent.com/105503216/177784030-7a78b82b-46d9-42d7-8788-6e92e603d6b0.png)
+``` sql
+SELECT 
+    COUNT(DISTINCT device_id) AS did_cnt, 
+    COUNT(*) AS question_cnt
+FROM question_practice_detail
+WHERE date BETWEEN '2021-08-01' AND '2021-08-31';
+```
+
+
