@@ -333,13 +333,24 @@ ORDER BY s1.id;
 
 ## 16
 现在运营想要了解2021年8月份所有练习过题目的总用户数和练习过题目的总次数，请取出相应结果  
-![image](https://user-images.githubusercontent.com/105503216/177784030-7a78b82b-46d9-42d7-8788-6e92e603d6b0.png)
+![image](https://user-images.githubusercontent.com/105503216/177784030-7a78b82b-46d9-42d7-8788-6e92e603d6b0.png)  
 ``` sql
 SELECT 
-    COUNT(DISTINCT device_id) AS did_cnt, 
+    COUNT(DISTINCT device_id) AS did_cnt,   # 注意以下DISTINCT的应用
     COUNT(*) AS question_cnt
 FROM question_practice_detail
 WHERE date BETWEEN '2021-08-01' AND '2021-08-31';
 ```
 
+## 17
+现在运营想要分别查看学校为山东大学或者性别为男性的用户的device_id、gender、age和gpa数据，请取出相应结果，结果不去重，先输出学校为山东大学再输出性别为男生的信息
+``` sql
+SELECT device_id, gender, age, gpa
+FROM user_profile
+WHERE university = '山东大学'
+UNION ALL
+SELECT device_id, gender, age, gpa
+FROM user_profile
+WHERE gender = 'male'
+```
 
