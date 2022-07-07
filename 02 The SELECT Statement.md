@@ -122,12 +122,24 @@ SELECT SUBSTR('ASDFGH',2);
 SDFGH
 ```
 ## The TRUNC operator 保留几位小数
+TRUNC(xx,几位数)
 ``` sql
 SELECT 
     TRUNC(AVG(revenue)
         OVER(ORDER BY date_time ROWS BETWEEN 15 PRECEDING AND CURRENT ROW), 2)     # round 2 decimal places
         AS moving_average
 FROM stock_values;
+```
+ROUND(xx,几位数)
+``` sql
+SELECT 
+    u.university,
+    ROUND(COUNT(*) / COUNT(DISTINCT q.device_id), 4) AS avg_answer_cnt
+FROM question_practice_detail q
+JOIN user_profile u
+ON q.device_id = u.device_id
+GROUP BY u.university
+ORDER BY u.university;
 ```
 
 ## The REPLACE operator 代替
