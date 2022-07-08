@@ -374,5 +374,37 @@ WHERE w1.Temperature > w2.Temperature
 
 ## 19
 ``` sql
+SELECT AVG(each_device_ret) AS avg_ret
+FROM
+(SELECT number_of_next_day / number AS each_device_ret
+FROM 
+(SELECT 
+    CASE   
+        WHEN number_of_next_day IS NULL THEN 0
+        ELSE number_of_next_day
+    END AS number_of_next_day,
+    number
+FROM
+(SELECT 
+    sub1.number_of_next_day,
+    sub2.device_id AS device_id,
+    sub2.number
+FROM
+    (SELECT q1.device_id, COUNT(*) AS number_of_next_day
+    FROM question_practice_detail q1
+    JOIN question_practice_detail q2
+    ON DATEDIFF(q2.date, q1.date) = 1 AND
+        q1.device_id = q2.device_id
+    GROUP BY q1.device_id) sub1
+RIGHT JOIN 
+    (SELECT device_id, COUNT(*) AS number 
+    FROM question_practice_detail
+    GROUP BY device_id) sub2
+ON sub1.device_id = sub2.device_id
+) sub3
+) sub4
+) sub5
 
+
+ 
 ```
