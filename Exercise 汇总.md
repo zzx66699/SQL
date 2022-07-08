@@ -355,7 +355,8 @@ WHERE gender = 'male'
 ```
 
 ## 18
-<img width="576" alt="截屏2022-07-08 下午9 11 36" src="https://user-images.githubusercontent.com/105503216/177998662-ddb1f4aa-be33-4a35-b7ee-873e2e08e57f.png">
+<img width="576" alt="截屏2022-07-08 下午9 11 36" src="https://user-images.githubusercontent.com/105503216/177998662-ddb1f4aa-be33-4a35-b7ee-873e2e08e57f.png">. 
+
 ``` sql
 SELECT w1.id
 FROM Weather w1
