@@ -354,3 +354,24 @@ FROM user_profile
 WHERE gender = 'male'
 ```
 
+## 18
+<img width="576" alt="截屏2022-07-08 下午9 11 36" src="https://user-images.githubusercontent.com/105503216/177998662-ddb1f4aa-be33-4a35-b7ee-873e2e08e57f.png">
+``` sql
+SELECT w1.id
+FROM Weather w1
+JOIN Weather w2
+ON DATEDIFF(w1.recordDate, w2.recordDate) = 1.  # 关于日期的间隔 使用DATEDIFF 不要直接使用数字 + 几
+WHERE w1.Temperature > w2.Temperature
+
+# 也可以使用DATE_ADD
+SELECT w1.id
+FROM Weather w1
+JOIN Weather w2
+ON W1.recordDate = DATE_ADD(W2.recordDate, interval 1 day) 
+WHERE w1.Temperature > w2.Temperature
+```
+
+## 19
+``` sql
+
+```
