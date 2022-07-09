@@ -354,7 +354,8 @@ FROM user_profile
 WHERE gender = 'male'
 ```
 
-## 18
+## 关于日期
+### 1.日期间隔
 <img width="576" alt="截屏2022-07-08 下午9 11 36" src="https://user-images.githubusercontent.com/105503216/177998662-ddb1f4aa-be33-4a35-b7ee-873e2e08e57f.png">. 
 
 ``` sql
@@ -372,7 +373,7 @@ ON W1.recordDate = DATE_ADD(W2.recordDate, interval 1 day)
 WHERE w1.Temperature > w2.Temperature
 ```
 
-## 19
+### 2.留存率
 <img width="636" alt="image" src="https://user-images.githubusercontent.com/105503216/178090821-2a6d2cef-6777-4b70-b28b-365d81add1ca.png">
 
 ``` sql
@@ -389,4 +390,34 @@ ON DATEDIFF(q2.date, q1.date) = 1 AND
 )
 SELECT number2 / number1 AS avg_ret 	# 注意这里一定要是columns的名字 不能是sub的名字
 FROM sub1, sub2;    			# 从两个sub中取columns
+```
+
+### 3.xx天内的活跃用户
+<img width="666" alt="image" src="https://user-images.githubusercontent.com/105503216/178098927-00fd1849-4bf5-4b18-835f-181bedcf4373.png">
+
+``` sql
+WITH sub1 AS(
+SELECT date AS Date, 
+	COUNT(DISTINCT user_id) AS 活跃用户数     # 每日的活跃用户数 是group_by日期之后 count(distinct user_id)
+FROM active
+GROUP BY date
+) ,
+sub2 AS (
+SELECT a1.date AS Date, 
+	COUNT(DISTINCT a1.user_id) AS 活跃30天留存用户数
+FROM active a1
+JOIN active a2
+ON a1.user_id = a2.user_id AND
+	DATEDIFF(a2.date, a1.date) < 30 AND     # 注意这里小于30
+    DATEDIFF(a2.date, a1.date) > 0          # 这里一定要大于0 不然在改日期之前的也会被取到
+GROUP BY a1.date
+)
+SELECT sub1.Date AS Date, 
+sub1.活跃用户数,
+CASE WHEN sub2.活跃30天留存用户数 IS NULL THEN 0
+	ELSE 活跃30天留存用户数
+END AS 活跃30天留存用户数
+FROM sub1
+LEFT JOIN sub2
+ON sub1.Date = sub2.Date
 ```
