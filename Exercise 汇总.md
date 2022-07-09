@@ -373,6 +373,8 @@ WHERE w1.Temperature > w2.Temperature
 ```
 
 ## 19
+<img width="636" alt="image" src="https://user-images.githubusercontent.com/105503216/178090821-2a6d2cef-6777-4b70-b28b-365d81add1ca.png">
+
 ``` sql
 WITH sub1 AS (
 SELECT COUNT(DISTINCT device_id, date) AS number1
