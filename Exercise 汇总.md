@@ -392,7 +392,7 @@ SELECT number2 / number1 AS avg_ret 	# 注意这里一定要是columns的名字 
 FROM sub1, sub2;    			# 从两个sub中取columns
 ```
 
-### 3.xx天内的活跃用户
+### 3.xx天内的活跃用户 & xx天内的留存用户
 <img width="666" alt="image" src="https://user-images.githubusercontent.com/105503216/178098927-00fd1849-4bf5-4b18-835f-181bedcf4373.png">
 
 ``` sql
