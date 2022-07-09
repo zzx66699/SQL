@@ -145,6 +145,7 @@ GROUP BY channel;
 ```
 
 ## The WITH operation
+多个WITH之间加上, 且不重复使用WITH
 ``` sql
 WITH table1 as (SELECT * FROM web_events),
      table2 as (SELECT * FROM accounts)
