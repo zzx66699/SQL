@@ -23,6 +23,13 @@ JOIN web_events w
 ON a.id = w.account_id
 WHERE a.id = 1001;
 ```
+DISTINCT 意味着后面的所有东西都相同才会被舍去  
+<img width="79" alt="截屏2022-07-09 上午11 42 44" src="https://user-images.githubusercontent.com/105503216/178090289-c2bcd942-8a86-4b2f-9420-9bb97c52d78b.png">  
+``` sql
+SELECT DISTINCT id, year  # DISCTINCT只能使用一次
+FROM try;
+```
+<img width="85" alt="image" src="https://user-images.githubusercontent.com/105503216/178090383-e8677b8e-cb89-4bf0-8219-730655378b05.png">
 
 ## The MOD() operator 求余数
 ``` sql
