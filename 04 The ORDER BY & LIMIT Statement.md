@@ -24,6 +24,15 @@ SELECT 10 AS number
 FROM customers
 ORDER BY number, quantity*number
 ```
+还可以用聚合函数
+``` sql
+SELECT customer_number
+FROM Orders
+GROUP BY customer_number
+ORDER BY COUNT(*) DESC    # 按照每一组的数量排序
+LIMIT 1
+```
+
 ## LIMIT
 Use offset to obtain a certain range of data
 ``` sql
