@@ -372,7 +372,8 @@ FROM Users u
 LEFT JOIN sub1 
 ON u.user_id = sub1.buyer_id;
 ```
-更方便的做法
+
+更方便的做法  
 ``` sql
 select 
 	user_id buyer_id, 
