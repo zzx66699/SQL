@@ -356,6 +356,7 @@ WHERE gender = 'male'
 
 ## 18
 <img width="495" alt="image" src="https://user-images.githubusercontent.com/105503216/178263367-bce590bc-0496-4afb-a459-be41cce7016d.png">  
+
 ``` sql
 WITH sub1 AS(
 SELECT u.user_id AS buyer_id, COUNT(*) AS orders_in_2019    # 有些user可能在2019年没有作为买家 在这里会直接被删去
@@ -371,9 +372,10 @@ SELECT u.user_id AS buyer_id,                              # 所以需要在这�
 FROM Users u
 LEFT JOIN sub1 
 ON u.user_id = sub1.buyer_id;
-```
+```  
 
 更方便的做法  
+
 ``` sql
 select 
 	user_id buyer_id, 
@@ -384,3 +386,5 @@ left join orders o
 on u.user_id = o.buyer_id
 group by user_id
 ```
+
+
