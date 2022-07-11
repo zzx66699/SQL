@@ -353,3 +353,22 @@ SELECT device_id, gender, age, gpa
 FROM user_profile
 WHERE gender = 'male'
 ```
+
+## 18
+<img width="495" alt="image" src="https://user-images.githubusercontent.com/105503216/178263367-bce590bc-0496-4afb-a459-be41cce7016d.png">  
+``` sql
+WITH sub1 AS(
+SELECT u.user_id AS buyer_id, COUNT(*) AS orders_in_2019    # 有些user可能在2019年没有作为买家 在这里会直接被删去
+FROM Users u
+JOIN Orders o
+ON u.user_id = o.buyer_id
+WHERE YEAR(o.order_date) = 2019 
+GROUP BY buyer_id)
+
+SELECT u.user_id AS buyer_id,                              # 所以需要在这个表中进行一个合并
+    u.join_date,
+    IFNULL(orders_in_2019,0) AS orders_in_2019
+FROM Users u
+LEFT JOIN sub1 
+ON u.user_id = sub1.buyer_id;
+```
