@@ -38,7 +38,7 @@ SELECT MOD(5,2);
 ---
 1
 ```
-## The CASE WHEN ... THEN ... operator 条件
+## The CASE WHEN ... THEN ... END operator 条件
 ``` sql
 SELECT CASE WHEN total_amount > 3000 THEN 'large'                                                   # 只有一次WHEN
             ELSE 'small' 
@@ -61,6 +61,16 @@ SELECT id,
     END AS Type
 FROM tree
 ```
+EXERCISE1: SUM()和CASE WHEN ... THEN ... ELSE... END 可以嵌套起来用
+![image](https://user-images.githubusercontent.com/105503216/178178936-aab0f0c2-8089-4bb4-b3b2-d5ad0f5191c6.png)
+``` sql
+SELECT stock_name,
+    SUM(CASE WHEN operation = 'Buy' THEN price * -1           # 在group的情况下 对operation这列的每一个值进行判定 并且直接输出
+        ELSE price END) AS capital_gain_loss                  # 注意下 END是CASE WHEN 这个句式的结束语
+FROM Stocks
+GROUP BY stock_name;
+```
+
 ## The RIGHT & LEFT operator 左右取值
 ``` sql
 SELECT LEFT(name, 3)        # 取name这一列每一行值的前3个字符
@@ -212,7 +222,17 @@ WHERE e.name IS NULL
 
 ORDER BY employee_id;
 ```
-
+## The IFNULL operation
+![image](https://user-images.githubusercontent.com/105503216/178181864-5776e10e-0854-4a03-ae7f-db9aa14e1ea9.png)
+![image](https://user-images.githubusercontent.com/105503216/178181878-9a44b59f-e582-4433-ae4a-4b1fd6906e67.png)
+``` sql
+SELECT u.name, IFNULL(SUM(r.distance),0) AS travelled_distance
+FROM Users u
+LEFT JOIN Rides r        # 左合并会产生0的问题
+ON u.id = r.user_id
+GROUP BY u.id
+ORDER BY travelled_distance DESC, u.name;
+```
 ## The date function 关于日期
 ### 获取
 提取现在的情况
