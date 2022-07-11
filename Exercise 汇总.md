@@ -372,3 +372,14 @@ FROM Users u
 LEFT JOIN sub1 
 ON u.user_id = sub1.buyer_id;
 ```
+更方便的做法
+``` sql
+select 
+	user_id buyer_id, 
+	join_date,
+	sum(if(year(order_date)='2019',1,0)) orders_in_2019     # 使用SUM()函数就可以直接判断了 而不像WHERE要舍去
+from users u
+left join orders o
+on u.user_id = o.buyer_id
+group by user_id
+```
