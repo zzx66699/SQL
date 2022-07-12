@@ -32,6 +32,15 @@ GROUP BY customer_number
 ORDER BY COUNT(*) DESC    # 按照每一组的数量排序
 LIMIT 1
 ```
+EXERCISE1: 常常用来筛选重复的个数  
+<img width="523" alt="image" src="https://user-images.githubusercontent.com/105503216/178404862-14e19726-7bd4-40f9-809d-c28666ad5bb0.png">   
+
+``` sql
+SELECT email AS Email   # 通过分组COUNT很容易求出重复的
+FROM Person
+GROUP BY email
+HAVING COUNT(*) > 1;
+```
 
 ## LIMIT
 Use offset to obtain a certain range of data
