@@ -193,3 +193,19 @@ FROM orders
 ORDER BY account_id, standard_qty;                                                             # 这是在显示的时候
 ```
 ![图片4](https://user-images.githubusercontent.com/105503216/176373858-09af4116-89fe-46e8-a634-59ab2005e2ec.png)
+
+## 使用SUM计数来判断条件是否成立
+EXERCISE1: 筛选只在某个范围中出现的值 -- 既不在前面也不在后面 
+<img width="516" alt="image" src="https://user-images.githubusercontent.com/105503216/178410766-5201c0b0-bf0b-45e2-9545-135851946688.png">  
+Write an SQL query that reports the products that were only sold in the first quarter of 2019. That is, between 2019-01-01 and 2019-03-31 inclusive.  
+Return the result table in any order.  
+
+``` sql
+SELECT p.product_id, p.product_name
+FROM Product p
+JOIN Sales s
+ON p.product_id = s.product_id
+GROUP BY p.product_id
+HAVING SUM(s.sale_date < '2019-01-01')=0 AND      # 即没有在2019-01-01之前卖过
+   SUM(s.sale_date > '2019-03-31')=0              # 也没有在2019-03-31之后卖过
+```
