@@ -38,6 +38,7 @@ SELECT MOD(5,2);
 ---
 1
 ```
+
 ## The CASE WHEN ... THEN ... END operator 条件
 ``` sql
 SELECT CASE WHEN total_amount > 3000 THEN 'large'                                                   # 只有一次WHEN
@@ -90,6 +91,7 @@ SELECT LEFT(primary_poc, STRPOS(primary_poc,' ')-1) AS 'first_name',
        RIGHT(primary_poc, LENGTH(primary_poc)-STRPOS(primary_poc, ' ')) AS 'last_name'
 FROM accounts;
 ```
+
 ## The STRPOS & POSITION operator 位置
 返回在a里b的index：STRPOS(a,b) 或者 POSITION(B IN A)
 ``` sql
@@ -138,6 +140,7 @@ SELECT SUBSTR('ASDFGH',2);
 ---
 SDFGH
 ```
+
 ## The TRUNC operator 保留几位小数
 TRUNC(xx,几位数)
 ``` sql
@@ -194,6 +197,31 @@ FROM Activities
 GROUP BY sell_date
 ORDER BY sell_date;
 ```
+
+## The substring_index() operator 按某种方法分割 然后取数
+substring_index(str,delim,count)  
+str:要处理的字符串 delim:分隔符   
+count:计数 正数就是从左往右数第n个分隔符左边的所有内容 负数就是从右往左数第n个分隔符右边的所有内容   
+<img width="705" alt="image" src="https://user-images.githubusercontent.com/105503216/178988136-bb81eec3-93fa-4458-88bd-42d08cb6b4ea.png">  
+``` sql
+# 直接分割
+SELECT substring_index(profile, ',',-1) AS gender, COUNT(*)
+FROM user_submit
+GROUP BY substring_index(profile, ',',-1);
+
+# 比较笨的方法
+SELECT gender, COUNT(*) AS number
+FROM (
+SELECT 
+    CASE WHEN profile LIKE '%female' THEN 'female'
+        ELSE 'male' END 
+    AS gender
+FROM user_submit
+) sub1
+GROUP BY gender;
+```
+注意：通过重复的substring_index(substring_index(),)可以提取出中间的字符串
+
 ## The UNION operator 两个表格行的合并
 rbind合并两个select之后的table  
 UNION（会删去重复的行）或者UNION ALL（这个不会删去重复的行）
@@ -222,6 +250,7 @@ WHERE e.name IS NULL
 
 ORDER BY employee_id;
 ```
+
 ## The IFNULL operation
 ![image](https://user-images.githubusercontent.com/105503216/178181864-5776e10e-0854-4a03-ae7f-db9aa14e1ea9.png)
 ![image](https://user-images.githubusercontent.com/105503216/178181878-9a44b59f-e582-4433-ae4a-4b1fd6906e67.png)
@@ -270,6 +299,7 @@ SELECT YEAR('2011-02-01') AS year;
 year
 2011
 ```
+
 ### 转化
 从标准化时间/日期变成任意格式的时间/日期  
 DATE_FORMAT(日期, '想要变成的形式')  
@@ -331,3 +361,5 @@ ORDER BY Year, Quarter;
 ```
 ![图片4](https://user-images.githubusercontent.com/105503216/176593369-5e499468-5b81-40c9-83ee-c117cf2f1372.png)  
 ![图片5](https://user-images.githubusercontent.com/105503216/176593406-671fbb90-9f61-4253-9a04-77f961279439.png)  
+
+
