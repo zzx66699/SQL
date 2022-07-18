@@ -262,73 +262,7 @@ ON u.id = r.user_id
 GROUP BY u.id
 ORDER BY travelled_distance DESC, u.name;
 ```
-## The date function 关于日期
-### 获取
-提取现在的情况
-``` sql
-SELECT NOW(), CURDATE(), CURTIME();
-```
-![图片9](https://user-images.githubusercontent.com/105503216/176394507-27e778a9-e761-4058-b52c-6d93aa8a1dc4.png)  
-提取秒
-``` sql
-SELECT SECOND(NOW()) AS second;
 
----
-second
-53
-```
-提取星期几
-``` sql
-SELECT DAYNAME(NOW()) AS day
-
----
-day
-Wednesday
-```
-提取月份
-``` sql
-SELECT MONTHNAME(NOW()) AS month_name,     # 返回英文名称
-       MONTH(NOW()) AS month_name_num；    # 返回月份的数字
-```
-![图片10](https://user-images.githubusercontent.com/105503216/176395773-af80ec28-6771-4127-93ef-32beea50f46a.png)  
-提取年份
-``` sql
-SELECT YEAR('2011-02-01') AS year;
-
----
-year
-2011
-```
-
-### 转化
-从标准化时间/日期变成任意格式的时间/日期  
-DATE_FORMAT(日期, '想要变成的形式')  
-TIME_FORMAT(时间, '想要变成的形式')
-``` sql
-SELECT DATE_FORMAT(NOW(), '%M %d %Y') AS date,
-       TIME_FORMAT(NOW(), '%H:%i %p') AS time;
-```
-![图片11](https://user-images.githubusercontent.com/105503216/176400565-a2907273-9667-4f92-94a3-2cd785d075b2.png)  
-
-从任意格式的时间变成标准化时间：  
-1. CAST(时间 AS DATE)
-``` sql
-# change '01/21/2014 08:00:00' into ‘2014-01-21’
-
-SELECT '01/21/2014', 
-        CAST(CONCAT(SUBSTR('01/21/2014', 7,4), '-',  
-                    SUBSTR('01/21/2014', 1,2), '-',
-                    SUBSTR('01/21/2014', 4,2)) AS DATE) AS result;
-```
-2. STR_TO_DATE(时间, '原来乱的格式') 会自动转化成sql默认的正确格式 year-month-day
-``` sql
-SELECT STR_TO_DATE('August 10 2017', '%M %d %Y');
-```
-### 间隔
-``` sql
-SELECT occurred_at + INTERVAL '28 days'    # 间隔28days
-FROM orders
-```
 ## The LEAD & LAG operator 关于延后和提前
 LAG(要延后的那一列, 延后的个数) OVER (ORDER BY 要根据什么排列)
 ``` sql
