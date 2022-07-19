@@ -51,6 +51,9 @@ FULL JOIN table2
 ON table1.common_field = table2.common_field;
 ```
 
+注意很多版本里没有FULL JOIN这个表达  
+可以用LEFT JOIN UNION RIGHT JOIN代替；
+
 ## 关于Inner JOIN 和 Outer JOIN的实例
 account  
 ![4](https://user-images.githubusercontent.com/105503216/176695403-6ba0bd12-8a90-4963-b607-e38b99bc066f.png)  
