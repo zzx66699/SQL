@@ -41,6 +41,15 @@ LEFT JOIN orders o
     ON o.customer_id = c.customer_id
 ORDER BY c.customer_id
 ```
+## FULL JOIN 
+连接表将包含的所有记录来自两个表，并使用NULL值作为两侧缺失匹配结果
+
+``` sql
+SELECT table1.column1, table2.column2
+FROM table1
+FULL JOIN table2
+ON table1.common_field = table2.common_field;
+```
 
 ## 关于Inner JOIN 和 Outer JOIN的实例
 account  
