@@ -37,7 +37,13 @@ SELECT MOD(5,2);
 
 ---
 1
+
+SELECT MOD(4,2);
+
+---
+0
 ```
+
 ## 取整
 ceil (value) 产生大于或等于指定值（value）的最小整数。  
 floor（value）与 ceil（）相反，产生小于或等于指定值（value）的最小整数。
