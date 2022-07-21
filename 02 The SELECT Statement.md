@@ -31,14 +31,16 @@ FROM try;
 ```
 <img width="85" alt="image" src="https://user-images.githubusercontent.com/105503216/178090383-e8677b8e-cb89-4bf0-8219-730655378b05.png">
 
-## The MOD() operator 求余数
+## The MOD() operator 或者 % 求余数
 ``` sql
 SELECT MOD(5,2);
 
 ---
 1
+```
 
-SELECT MOD(4,2);
+``` sql
+SELECT 4 % 2;
 
 ---
 0
