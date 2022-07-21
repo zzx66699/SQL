@@ -353,3 +353,14 @@ SELECT device_id, gender, age, gpa
 FROM user_profile
 WHERE gender = 'male'
 ```
+
+## 18 统计给定字段在字符串中出现的次数
+给定字段 Target_string 原字符串 All_string  
+
+``` 
+SELECT (LENGTH(All_string) - LENGTH(REPLACE(All_string, Target_string, ''))) / LENGTH(Target_string) AS cnt
+FROM table
+
+```
+
+
