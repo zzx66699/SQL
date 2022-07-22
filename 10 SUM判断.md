@@ -46,3 +46,22 @@ ON u.device_id = q.device_id
 WHERE u.university = '复旦大学'  # 注意WHERE一定要在JOIN之后 所有不是复旦的都不要
 GROUP BY u.device_id;
 ```
+
+## 03
+现在有一个table记录了用户的购买行为 其中可能会有重复购买  
+现在要求每一个产品的复购率 = 重复购买的人数 / 购买的总人数
+
+``` sql
+SELECT product_id, SUM(if_repurchase) / COUNT(*)
+FROM
+(SELECT uid, product_id, 
+	CASE WHEN COUNT(*) THEN 1 ELSE 0 END AS if_repurchase
+FROM table1
+GROUP BY uid, product_id) sub1
+GROUP BY product_id
+```
+
+按照人和产品分组  
+判断每一个人是不是重复购买的 如果是 就写1 不是写0 得出来一个人和产品不重复的表  
+再按照产品分组
+很容易求出每个产品有多少个人购买 以及有多少人重复购买  
