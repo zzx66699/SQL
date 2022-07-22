@@ -152,26 +152,8 @@ SELECT SUBSTR('ASDFGH',2);
 SDFGH
 ```
 
-## The TRUNC operator 保留几位小数
-TRUNC(xx,几位数)
-``` sql
-SELECT 
-    TRUNC(AVG(revenue)
-        OVER(ORDER BY date_time ROWS BETWEEN 15 PRECEDING AND CURRENT ROW), 2)     # round 2 decimal places
-        AS moving_average
-FROM stock_values;
-```
+## The ROUND operator 保留几位小数
 ROUND(xx,几位数)
-``` sql
-SELECT 
-    u.university,
-    ROUND(COUNT(*) / COUNT(DISTINCT q.device_id), 4) AS avg_answer_cnt
-FROM question_practice_detail q
-JOIN user_profile u
-ON q.device_id = u.device_id
-GROUP BY u.university
-ORDER BY u.university;
-```
 
 ## The REPLACE operator 代替
 用b替换a：REPLACE(TEXT,A,B)
@@ -272,6 +254,11 @@ LEFT JOIN Rides r        # 左合并会产生0的问题
 ON u.id = r.user_id
 GROUP BY u.id
 ORDER BY travelled_distance DESC, u.name;
+```
+注意在做除法时 如果分母为0 会自动记为null 此时就可以用ifnull
+
+``` sql
+SELECT IFNULL(SUM(if_payment)/SUM(if_refund),0) AS refund_rate;
 ```
 
 ## The LEAD & LAG operator 关于延后和提前
