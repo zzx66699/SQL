@@ -37,7 +37,8 @@ WHERE invoice_date BETWEEN '2019-01-01' AND '2019-12-31';
 ``` 
 
 ## The GROUP BY statement
-GROUP BY clause is after FROM and WHERE, before ORDER BY
+注意group_by是可以用select里面的alias的！！！！  
+只有where不可以！！  
 ``` sql
 SELECT
     client_id,
