@@ -96,12 +96,6 @@ SELECT a.name,
        END AS group
 FROM accounts;
 ```
-关于名字 first_name和last_name
-``` sql
-SELECT LEFT(primary_poc, STRPOS(primary_poc,' ')-1) AS 'first_name',
-       RIGHT(primary_poc, LENGTH(primary_poc)-STRPOS(primary_poc, ' ')) AS 'last_name'
-FROM accounts;
-```
 
 ## The STRPOS & POSITION operator 位置
 返回在a里b的index：STRPOS(a,b) 或者 POSITION(B IN A)
@@ -169,6 +163,13 @@ ZZZ
 SELECT REPLACE(name, ' ','') AS result
 FROM account;
 ```
+EXERCISE:  
+求给定字段 Target_string在原字符串 All_string里的出现次数   
+
+``` sql
+SELECT (LENGTH(All_string) - LENGTH(REPLACE(All_string, Target_string, ''))) / LENGTH(Target_string) AS cnt
+FROM table
+```
 
 ## The CONCAT operator 连结
 ``` sql
@@ -179,6 +180,7 @@ result
 ZZX    
 ```
 GROUP_CONCAT 分组连接  
+GROUP_CONCAT(要连接的那一列 ORDER BY 按照什么列连接 SEPARATOR '连接符')  
 ![image](https://user-images.githubusercontent.com/105503216/177463689-66c091ef-dc9d-4bea-9577-45a5252e1a99.png)
 ![image](https://user-images.githubusercontent.com/105503216/177463716-a3f33d4f-047f-44de-9f66-70a2f75341ba.png)
 ![image](https://user-images.githubusercontent.com/105503216/177463776-44d0cc9a-3444-491e-90fc-3dc6e355914b.png)
@@ -281,7 +283,7 @@ SELECT *, LAG(JoiningDate, 2, ‘1999-09-01’) OVER (ORDER BY JoiningDate) AS E
 FROM employee;
 ```
 ![图片2](https://user-images.githubusercontent.com/105503216/176592475-7d71949d-aa1a-4348-8c53-2bb882959efd.png)  
-lead同理
+lead同理  
 ![图片3](https://user-images.githubusercontent.com/105503216/176592545-8e4b2d63-30e7-4350-9986-5bc4fa2b294b.png)  
 还可以和PARTITION BY结合进行分组延后
 ``` sql
