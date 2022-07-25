@@ -105,7 +105,20 @@ FROM invoices i
 JOIN clients c USING (client_id)
 GROUP BY state,city WITH ROLLUP      # 写在多个分组的最后 只要写一次就可以了
 ```
-![image](https://user-images.githubusercontent.com/105503216/176918218-6400a158-1299-4ae6-91cc-f5fe320af08d.png)  
+![image](https://user-images.githubusercontent.com/105503216/176918218-6400a158-1299-4ae6-91cc-f5fe320af08d.png)   
+
+求平均数
+``` sql
+SELECT IFNULL(driver_id,'总体'), ROUND(AVG(grade),1) AS avg_grade  # 这里注意填充“总体”
+FROM tb_get_car_order
+WHERE driver_id IN 
+(SELECT driver_id
+FROM tb_get_car_order
+WHERE DATE_FORMAT(finish_time, '%Y-%m') = '2021-10' AND
+    start_time IS NULL)
+GROUP BY driver_id WITH ROLLUP    # 都是前面平均数 最后也是自动求平均数
+```
+<img width="231" alt="image" src="https://user-images.githubusercontent.com/105503216/180734817-36e9017a-c953-46c9-b34c-d704121b7af9.png">  
 
 ## The SUM...OVER... operator 累加求和
 Cum(ulative) sum 不断地累计求和  
