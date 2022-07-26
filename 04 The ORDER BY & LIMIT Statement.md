@@ -10,8 +10,13 @@ Sort data by multiple columns. DESC can be used in any column
 ``` sql
 SELECT *
 FROM customers
+ORDER BY state DESC, first_name DESC
+
+SELECT *
+FROM customers
 ORDER BY state DESC, first_name
 ```
+
 MySQL can sort data by columns not necessarily in SELECT clause(may be wrong in other database systems) or sort data by alias(in MySQL)
 ``` sql
 SELECT first_name, last_name, 10 + 1 AS points
