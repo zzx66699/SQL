@@ -13,6 +13,7 @@ FROM accounts;
 ### COUNT(a)在a的值为null的时候会算0  
 <img width="476" alt="image" src="https://user-images.githubusercontent.com/105503216/180939647-ffd67d2d-e039-46a7-ad31-b2e2dd9709b1.png">    
 求每一个product有多少订单  
+
 ``` sql
 SELECT prod_name, COUNT(order_num) AS orders    # 一定要COUNT那一列 而不能用* 
 FROM Products p
@@ -24,6 +25,7 @@ ORDER BY prod_name;
 
 ### SUM(a)在a的值为null的时候会当成0自动略过
 <img width="214" alt="image" src="https://user-images.githubusercontent.com/105503216/180942476-199e73db-5c4d-4763-a893-2eadeb3c84a9.png">
+
 ``` sql
 SELECT difficult_level, SUM(question_id)
 FROM question_detail
