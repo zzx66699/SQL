@@ -23,15 +23,18 @@ GROUP BY prod_name       # 不能用id
 ORDER BY prod_name;
 ```
 
-### SUM(a)在a的值为null的时候会当成0自动略过
-<img width="214" alt="image" src="https://user-images.githubusercontent.com/105503216/180942476-199e73db-5c4d-4763-a893-2eadeb3c84a9.png">
+### SUM(a)在a的值为null的时候会当成0自动略过 
+如果有其他数据 null那一列当作0 正常输出sum的值    
+如果没有其他数据 那么输出null  
+<img width="209" alt="截屏2022-07-26 下午3 02 42" src="https://user-images.githubusercontent.com/105503216/180944312-1e070b86-1bab-4f28-8332-4bfc456da368.png">
 
 ``` sql
 SELECT difficult_level, SUM(question_id)
 FROM question_detail
 GROUP BY difficult_level;
 ```
-<img width="195" alt="image" src="https://user-images.githubusercontent.com/105503216/180942664-9e71014e-8272-43a6-8de7-4ba194a04909.png">  
+<img width="224" alt="image" src="https://user-images.githubusercontent.com/105503216/180944398-9a48bb29-43e1-42eb-ad6f-85901cb29d48.png">  
+
 
 
 EXERCISE  
