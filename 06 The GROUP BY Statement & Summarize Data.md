@@ -10,6 +10,28 @@ SELECT COUNT(DISTINCT client_id) AS total_clients,      # 使用DISTINCT去remov
 FROM accounts;
 ```
 注意sql中没有中位数median的函数  
+### COUNT(a)在a的值为null的时候会算0  
+<img width="476" alt="image" src="https://user-images.githubusercontent.com/105503216/180939647-ffd67d2d-e039-46a7-ad31-b2e2dd9709b1.png">    
+求每一个product有多少订单  
+``` sql
+SELECT prod_name, COUNT(order_num) AS orders    # 一定要COUNT那一列 而不能用* 
+FROM Products p
+LEFT JOIN OrderItems o
+ON p.prod_id = o.prod_id
+GROUP BY prod_name       # 不能用id
+ORDER BY prod_name;
+```
+
+### SUM(a)在a的值为null的时候会当成0自动略过
+<img width="214" alt="image" src="https://user-images.githubusercontent.com/105503216/180942476-199e73db-5c4d-4763-a893-2eadeb3c84a9.png">
+``` sql
+SELECT difficult_level, SUM(question_id)
+FROM question_detail
+GROUP BY difficult_level;
+```
+<img width="195" alt="image" src="https://user-images.githubusercontent.com/105503216/180942664-9e71014e-8272-43a6-8de7-4ba194a04909.png">  
+
+
 EXERCISE  
 得到以下表格  
 ![image](https://user-images.githubusercontent.com/105503216/176908062-83291e93-b0fd-4209-8e98-e1c607bac33b.png)
