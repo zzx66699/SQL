@@ -354,6 +354,26 @@ FROM user_profile
 WHERE gender = 'male'
 ```
 
+## 18 去掉一个最大值和一个最小值 求平均
+<img width="688" alt="image" src="https://user-images.githubusercontent.com/105503216/181262695-d6e30e00-85f9-4f21-be4b-78eba641feba.png">  
+``` sql
+SELECT ei.tag,
+       ei.difficulty,
+       ROUND((SUM(er.score)-MIN(er.score)-MAX(er.score)) / (COUNT(er.score)-2),1) AS clip_avg_score  # 总和-最大-最小 除以 数量-2
+FROM examination_info ei,exam_record er
+WHERE ei.exam_id = er.exam_id
+  AND ei.tag = "SQL"
+  AND ei.difficulty = "hard"; 
+```
+<img width="673" alt="image" src="https://user-images.githubusercontent.com/105503216/181270266-2232683b-5f54-456e-9ae0-8dda8dfed666.png">  
+``` sql
+SELECT DATE_FORMAT(start_time,'%Y%m') AS month, 
+    ROUND(COUNT(DISTINCT uid, DATE_FORMAT(start_time,'%Y-%m-%d')) / COUNT(DISTINCT uid),2) AS avg_active_days,	 # 注意这里同一个用户在同一天活跃只算一次 单不同用户在同一天活跃算不同的次数
+    COUNT(DISTINCT uid) AS mau
+FROM exam_record
+WHERE DATE_FORMAT(start_time,'%Y') = 2021 AND submit_time IS NOT NULL
+GROUP BY month 
+```
 
 
 
