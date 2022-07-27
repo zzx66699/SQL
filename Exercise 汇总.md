@@ -277,6 +277,7 @@ ORDER BY employee_id
 
 ## 14
 ![image](https://user-images.githubusercontent.com/105503216/177469684-37fbda74-159c-4915-b8f8-42df8ce84ddb.png)
+
 ``` sql
 SELECT product_id, 'store1' AS store, store1 AS price
 FROM Products
@@ -293,6 +294,7 @@ WHERE store3 IS NOT NULL
 
 ## 15
 ![image](https://user-images.githubusercontent.com/105503216/177519237-27da39fc-19f5-463f-84fa-2c1a3463af59.png)
+
 ``` sql
 # for odds
 SELECT s1.id, 
@@ -356,6 +358,7 @@ WHERE gender = 'male'
 
 ## 18 去掉一个最大值和一个最小值 求平均
 <img width="688" alt="image" src="https://user-images.githubusercontent.com/105503216/181262695-d6e30e00-85f9-4f21-be4b-78eba641feba.png">  
+
 ``` sql
 SELECT ei.tag,
        ei.difficulty,
