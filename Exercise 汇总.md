@@ -366,6 +366,7 @@ WHERE ei.exam_id = er.exam_id
   AND ei.difficulty = "hard"; 
 ```
 <img width="673" alt="image" src="https://user-images.githubusercontent.com/105503216/181270266-2232683b-5f54-456e-9ae0-8dda8dfed666.png">  
+
 ``` sql
 SELECT DATE_FORMAT(start_time,'%Y%m') AS month, 
     ROUND(COUNT(DISTINCT uid, DATE_FORMAT(start_time,'%Y-%m-%d')) / COUNT(DISTINCT uid),2) AS avg_active_days,	 # 注意这里同一个用户在同一天活跃只算一次 单不同用户在同一天活跃算不同的次数
