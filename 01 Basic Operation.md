@@ -44,7 +44,7 @@ DROP TABLE IF EXISTS web-events;
 
 DROP TABLE IF EXISTS temp1, temp2;                # 删除多个table
 ```
-保留这个table以及列名 但是把所有量都删除
+保留这个table以及列名 但是把所有量都删除 并且重置自增主键  
 ``` sql
 TRUNCATE TABLE web_events;
 ```
