@@ -379,5 +379,30 @@ WHERE DATE_FORMAT(start_time,'%Y') = 2021 AND submit_time IS NOT NULL
 GROUP BY month 
 ```
 
+## 19.提取出所有submit_time都非null的人
+``` sql
+SELECT name, COUNT(submit_time) AS c1, COUNT(*) AS c2  ## 只要这一列的count数和总行数相同 就说明全是非null 
+FROM ...
+GROUP BY name
+HAVING c1=c2
+```
+也可以按下面的写法 sum(if(xx is null, 1, 0))
 
+## 20.从一个table中筛选出了符合条件的值 
+根本不需要和table合并进行下一步 可以直接在筛选那一步把后续需要的量写上！！！！！！！！  
+这里 我需要所有最近3个月内发生的测试记录 根本不需要把(uid,最近三个月)的table 和 原table 合并
+``` sql
+SELECT uid, exam_complete_cnt
+FROM
+    (SELECT uid, SUM(IF(submit_time IS NULL, 1, 0)) AS if_null,
+        COUNT(*) AS exam_complete_cnt
+    FROM
+    (SELECT uid, submit_time,    # 在一步里可以直接选取submit_time
+        DENSE_RANK() OVER (PARTITION BY uid ORDER BY DATE_FORMAT(start_time,'%Y-%m') DESC) AS rk
+    FROM exam_record) sub1
+    WHERE rk <= 3
+    GROUP BY uid
+    HAVING if_null = 0) sub2
+ORDER BY exam_complete_cnt DESC, uid DESC;
+```
 
