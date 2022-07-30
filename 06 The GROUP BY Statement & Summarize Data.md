@@ -217,10 +217,26 @@ FROM orders
 ORDER BY account_id, total DESC;
 ```
 ![图片8](https://user-images.githubusercontent.com/105503216/176385928-ec3f3659-5ea7-432f-9594-f58f2da569fb.png)  
-而DENSE_RANK不会skip掉前面并列的
+而DENSE_RANK不会skip掉前面并列的  
+
+EXERCISE:  
+<img width="687" alt="image" src="https://user-images.githubusercontent.com/105503216/181894055-ee260112-f71f-4af7-8102-ea9996393683.png">  
+题目中给了很多排序条件，这些条件一定是写在rank的order by之后的，需要写三个：最大、最小、uid 所以思路就是先找到这三个分别是多少  
+
 ``` sql
-#????
+SELECT tag AS tid, uid, rk AS ranking
+FROM
+(SELECT tag, uid, 
+    RANK() OVER (PARTITION BY tag ORDER BY max_score DESC, min_score DESC, uid DESC) AS rk
+FROM 
+(SELECT tag, uid, MAX(score) AS max_score, MIN(score) AS min_score
+FROM examination_info i
+JOIN exam_record r
+ON i.exam_id = r.exam_id
+GROUP BY uid, tag) sub1) sub2
+WHERE rk IN (1,2,3)
 ```
+
 
 ## The PARTITION BY operation 分组进行
 NTILE结合PARTITION BY, 在每一个组里分成12345份
