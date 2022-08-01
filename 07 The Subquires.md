@@ -30,6 +30,17 @@ WHERE MONTH(occurred_at) =
 (SELECT MIN(MONTH(occurred_at))     # 注意MIN,MAX这种aggregation function不能直接放在where里面 必须用subquery
 FROM orders);
 ```
+
+EXERCISE3  
+注意筛选出一列不在另一列中的行 也要用sub 不能直接列not in 列
+
+``` sql
+SELECT e.emp_no, m.emp_no AS manager
+FROM dept_emp e
+JOIN dept_manager m
+ON e.dept_no = m.dept_no
+WHERE e.emp_no NOT IN (SELECT emp_no FROM dept_manager)   # 千万不能WHERE e.emp_no NOT IN emp_no 
+```
 ## Subqueires in SELECT statement
 按列来看 前面几列已经列好了  
 需要对应着前面几列每一行的值 来生成后面的列每一行的值  
