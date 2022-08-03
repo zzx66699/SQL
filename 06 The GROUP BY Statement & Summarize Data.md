@@ -208,7 +208,8 @@ ORDER BY occurred_at;
 ```
 ![图片6](https://user-images.githubusercontent.com/105503216/176376186-92e58f96-b8e2-459c-b322-97ac2496e656.png)  
 RANK是在按照数值排名  
-如果是相同的值，会显示同样的排名，但是后面的rank会skip
+1 2 2 4  
+
 ``` sql
 # for each account, sales rank for each order
 
@@ -217,7 +218,10 @@ FROM orders
 ORDER BY account_id, total DESC;
 ```
 ![图片8](https://user-images.githubusercontent.com/105503216/176385928-ec3f3659-5ea7-432f-9594-f58f2da569fb.png)  
-而DENSE_RANK不会skip掉前面并列的  
+而DENSE_RANK不会skip掉前面并列的   
+1 2 2 3  
+<img width="535" alt="image" src="https://user-images.githubusercontent.com/105503216/182507605-9755320c-0380-4b84-bb63-7f646123f0a4.png">  
+
 
 EXERCISE:  
 <img width="687" alt="image" src="https://user-images.githubusercontent.com/105503216/181894055-ee260112-f71f-4af7-8102-ea9996393683.png">  
