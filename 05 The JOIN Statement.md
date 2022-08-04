@@ -6,7 +6,10 @@ FROM orders o
 JOIN customers c
     ON o.customer_id = c.customer_id;
 ```
-Join more than 2 tables 多个table结合
+
+### Join more than 2 tables 多个table结合 
+如果是一个表要个另一个表结合多次 记得把另外一个表的alias改了 就不会出现重复问题了！！！
+
 ``` sql
 SELECT 
     o.order_id,
@@ -20,7 +23,8 @@ JOIN customers c
 JOIN order_statuses os
     ON o.status = os.order_status_id
 ```
-多个join条件
+
+### 多个join条件
 ``` sql
 SELECT *
 FROM order_items oi
