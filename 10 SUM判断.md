@@ -52,7 +52,7 @@ GROUP BY u.device_id;
 现在要求每一个产品的复购率 = 重复购买的人数 / 购买的总人数
 
 ``` sql
-SELECT product_id, SUM(if_repurchase) / COUNT(*)
+SELECT product_id, SUM(if_repurchase) / COUNT(*)   # 其实这个写AVG(if_repurchase)就可以了
 FROM
 (SELECT uid, product_id, 
 	CASE WHEN COUNT(*) THEN 1 ELSE 0 END AS if_repurchase
