@@ -171,7 +171,38 @@ FROM orders;
 ```
 ![图片2](https://user-images.githubusercontent.com/105503216/176368932-1a0c54d4-dc9a-4a71-a60e-0ba808b20ad0.png)  
 
-## The NTILE operator 几等分点 结果是组别数
+## 关于中位数
+### 求位置  
+<img width="357" alt="image" src="https://user-images.githubusercontent.com/105503216/183000192-247c1892-0e03-4f0d-99ff-746af3239e5f.png">
+<img width="671" alt="image" src="https://user-images.githubusercontent.com/105503216/183000214-cafc6375-4691-439f-9eb9-7a433d3ae4f5.png">  
+求位置比较简单 只需要考虑个数就可以  
+奇数start和end相同 偶数不同  
+ROUND()是四舍五入
+``` python
+SELECT job, 
+    ROUND(COUNT(*) / 2) AS start,   # 自动五入进一个数
+    ROUND((COUNT(*)+1) / 2) AS end
+FROM grade
+GROUP BY job
+ORDER BY job
+```
+
+### 合并的数据求是哪个 
+<img width="272" alt="image" src="https://user-images.githubusercontent.com/105503216/182999850-3f0c009d-6144-4280-ad47-8be6ee1a1c4d.png"><img width="660" alt="image" src="https://user-images.githubusercontent.com/105503216/182999948-5d66c896-56e8-4047-bec7-f10e88b65ec6.png">  
+核心思想：当某一数的正序和逆序累计均大于整个序列的数字个数的一半即为中位数  
+``` python
+SELECT grade
+FROM
+(SELECT grade, 
+    (SELECT SUM(number) / 2 FROM class_grade) AS half_total,  # 这里是个数 所以必须sub 不能直接sum 不然就只有一行了
+     SUM(number) OVER (ORDER BY grade) AS sum_nb, 
+     SUM(number) OVER (ORDER BY grade DESC) AS sum_nb_desc
+FROM class_grade) sub1
+WHERE sum_nb >= half_total AND sum_nb_desc >= half_total
+ORDER BY grade;
+```
+
+### The NTILE operator 几等分点 结果是组别数
 ``` sql
 SELECT account_id, occurred_at, standard_qty, 
        NTILE(4) OVER (ORDER BY standard_qty) AS quartile,         # 根据standard_qty从小到大排序分组
@@ -209,6 +240,7 @@ GROUP BY median
 ORDER BY median
 ```
 ![图片5](https://user-images.githubusercontent.com/105503216/176373692-40443b75-2718-4733-afa4-2f8657653699.png)
+
 
 
 ## The ROW_NUMBER & RANK & DENSE_RANK operator 排序\排名
