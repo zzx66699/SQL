@@ -1,4 +1,7 @@
 # Chapter8 Exercise汇总
+
+<img width="674" alt="image" src="https://user-images.githubusercontent.com/105503216/182991234-f172fa65-0288-40cd-82ec-9f4e06dfe7dd.png">
+
 ## 1
 ![image](https://user-images.githubusercontent.com/105503216/177029181-41ac7e54-c868-4655-85a1-cc0e0155c34f.png)
 ``` sql
