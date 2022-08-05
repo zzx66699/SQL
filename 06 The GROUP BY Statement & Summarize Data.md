@@ -23,6 +23,18 @@ GROUP BY prod_name       # 不能用id
 ORDER BY prod_name;
 ```
 
+###  COUNT() GROUP BY A 在A里有null值的时候会计算null值的个数
+``` python
+SELECT c.name AS source, COUNT(*) AS cnt
+FROM order_info o
+LEFT JOIN client c
+ON o.client_id = c.id
+GROUP BY source
+ORDER BY source;
+```
+<img width="522" alt="image" src="https://user-images.githubusercontent.com/105503216/182996257-8b7b6c41-59cf-4a32-a30d-267d5e25b89e.png">  
+所以一般用IFNULL(c.name, 'xx')转化成对应量
+
 ### SUM(a)在a的值为null的时候会当成0自动略过 
 如果有其他数据 null那一列当作0 正常输出sum的值    
 如果没有其他数据 那么输出null  
