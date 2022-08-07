@@ -97,6 +97,15 @@ FROM invoices i
 JOIN clients USING (client_id)
 GROUP BY state, city
 ```
+### 几个用法区分
+1.如果a和b一一对应 group by a order by b b要么用聚合函数 要么group by a,b      
+<img width="520" alt="image" src="https://user-images.githubusercontent.com/105503216/183277193-89a2dd0b-fefb-4073-b50f-d13964904ab2.png">  
+或者  
+<img width="273" alt="image" src="https://user-images.githubusercontent.com/105503216/183281489-0fdcc2cc-840f-4d9c-8ba2-d3c5f9e11439.png">  
+千万不要select name ... group by id 这样很容易出错的
+
+
+
 
 ## The HAVING statement
 HAVING clause used after GROUP BY clause as a selecting condition  
