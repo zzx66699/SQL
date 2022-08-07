@@ -46,6 +46,22 @@ FROM Person
 GROUP BY email
 HAVING COUNT(*) > 1;
 ```
+### 注意distinct a 和order by b在一起很容易报错 因为distinct a先执行 如果一个a对应好几个b 不知道order 的时候应该用哪一个b对应
+这时候要换成group by 而不是distinct
+
+``` python
+SELECT music_name
+FROM follow f
+JOIN music_likes m
+ON f.follower_id = m.user_id
+JOIN music c
+ON c.id = m.music_id
+WHERE f.user_id = 1 AND music_id NOT IN 
+    (SELECT music_id FROM music_likes WHERE user_id = 1)
+GROUP BY music_id      
+ORDER BY music_id;
+```
+不可以写成 select distinct music_name ...... order by music_id !!!!!!!!!!!!!
 
 ## LIMIT
 Use offset to obtain a certain range of data
