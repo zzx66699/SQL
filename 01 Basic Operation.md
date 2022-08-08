@@ -182,6 +182,35 @@ DROP birthday,
 DROP total;
 ```
 
+## 创建索引
+添加主键  
+
+``` python
+alter table actor add unique index uniq_idx_firstname(first_name);
+alter table actor add index idx_lastname(last_name);
+```
+
+添加唯一索引
+
+``` python
+ALTER TABLE tbl_name ADD UNIQUE index_name (col_list);
+// 这条语句创建索引的值必须是唯一的。
+```
+
+添加普通索引
+
+``` python
+ALTER TABLE tbl_name ADD INDEX index_name (col_list);
+// 添加普通索引，索引值可出现多次。
+```
+
+添加全文索引
+
+``` python
+ALTER TABLE tbl_name ADD FULLTEXT index_name (col_list);
+// 该语句指定了索引为 FULLTEXT ，用于全文索引。
+```
+
 ## The LAST_INSERT_ID() operator 返回上一个插入的ID  
 当只插入一行时
 ``` sql
