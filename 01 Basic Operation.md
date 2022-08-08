@@ -38,6 +38,15 @@ SELECT id, account_id
 FROM orders                              # 从orders这个table中提取所需列
 WHERE gloss_qty > 10;
 ```
+也可以先把新table的列名和attribute写好  
+
+``` python
+CREATE TABLE actor_name (
+    first_name varchar(45) NOT NULL,
+    last_name varchar(45) NOT NULL)
+SELECT first_name, last_name
+FROM actor
+```
 
 ## INSERT的三种方式
 
