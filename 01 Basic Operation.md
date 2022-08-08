@@ -264,3 +264,11 @@ SELECT LAST_INSERT_ID() AS lastid;
 lastid
 5
 ```
+
+## 创建视图
+``` python
+CREATE VIEW actor_name_view AS
+SELECT first_name AS first_name_v,
+    last_name AS last_name_v
+FROM actor
+```
