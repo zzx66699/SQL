@@ -23,6 +23,7 @@ CREATE TABLE web_events (id INTEGER AUTO_INCREMENT PRIMARY KEY,     # 列名, da
 INSERT INTO web_events VALUES (1, 1001, '2015-06-07 17:22:12', 'direct');    # 一行一行地插入
 INSERT INTO web_events VALUES (2, 1001, '2015-02-03 14:03:12', 'direct');
 ```
+
 ### 从其他table中提取创建
 可以通过此种方式完整copy  
 需要注意的是 会ignore some attributes(Primary Key, Auto Increment) when copy
@@ -36,6 +37,17 @@ CREATE TABLE IF NOT EXISTS orders1 AS
 SELECT id, account_id 
 FROM orders                              # 从orders这个table中提取所需列
 WHERE gloss_qty > 10;
+```
+
+## INSERT的三种方式
+
+``` python
+# mysql中常用的三种插入数据的语句: 
+# insert into表示插入数据，数据库会检查主键，如果出现重复会报错； 
+# replace into表示插入替换数据，需求表中有PrimaryKey，
+#             或者unique索引，如果数据库已经存在数据，则用新数据替换，如果没有数据效果则和insert into一样； 
+# insert ignore表示，如果中已经存在相同的记录，则忽略当前新数据；
+insert ignore into actor values("3","ED","CHASE","2006-02-15 12:34:33");
 ```
 
 ## Delete table
