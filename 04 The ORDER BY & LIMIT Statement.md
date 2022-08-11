@@ -64,12 +64,10 @@ ORDER BY music_id;
 不可以写成 select distinct music_name ...... order by music_id !!!!!!!!!!!!!
 
 ## LIMIT
-Use offset to obtain a certain range of data
-``` sql
-SELECT *
-FROM customers
-LIMIT 6, 3         # 前6位不要，从第7位开始，取3个值，getting records 7-9)
-```
+<img width="627" alt="image" src="https://user-images.githubusercontent.com/105503216/184058784-cae55ec7-0d1b-405d-8c16-67f33e96d968.png">  
+都可以理解成行，这样方便一点  
+跳过前5行，从第六行开始取  
+
 EXAMPLE:  
 ![image](https://user-images.githubusercontent.com/105503216/177524032-12f9cc7b-4766-425a-8e68-c3f3b9728cc5.png)
 ``` sql
