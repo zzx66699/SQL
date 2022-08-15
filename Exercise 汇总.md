@@ -410,7 +410,7 @@ ORDER BY exam_complete_cnt DESC, uid DESC;
 可以直接在第一步就进行计算，而不用合并！！！
 ![image](https://user-images.githubusercontent.com/105503216/184595882-6e01e2d7-79d7-4c47-9dd2-e44715121654.png)   
 
-``` python
+``` sql
 SELECT city, driver_id, avg_grade, avg_order_num, avg_mileage
 FROM
 (SELECT *, 
@@ -428,3 +428,26 @@ WHERE rk = 1
 ORDER BY avg_order_num 
 ```
 
+## 22.
+![image](https://user-images.githubusercontent.com/105503216/184608008-1a5ff14a-f18b-46b4-b9eb-37676b97788f.png)
+
+``` sql
+SELECT period, COUNT(*) AS get_car_num, 
+    ROUND(AVG(wait_time/60),1) AS avg_wait_time,
+    ROUND(AVG(dispatch_time/60),1) AS avg_dispatch_time
+FROM
+(SELECT event_time,
+    CASE 
+        WHEN HOUR(event_time) IN (7,8) THEN '早高峰'
+        WHEN  HOUR(event_time) BETWEEN 9 AND 16 THEN '工作时间'
+        WHEN HOUR(event_time) IN (17,18,19) THEN '晚高峰'
+        ELSE '休息时间' END AS period,
+    TIMESTAMPDIFF(SECOND, event_time, end_time) AS wait_time, 
+    TIMESTAMPDIFF(SECOND, order_time, start_time) AS dispatch_time
+FROM tb_get_car_order o
+LEFT JOIN tb_get_car_record r
+ON o.order_id = r.order_id
+WHERE DAYOFWEEK(event_time) BETWEEN 2 AND 6 ) sub1
+GROUP BY period
+ORDER BY get_car_num
+```
