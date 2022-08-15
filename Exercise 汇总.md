@@ -406,3 +406,25 @@ FROM
 ORDER BY exam_complete_cnt DESC, uid DESC;
 ```
 
+## 21. 求每个城市评分最高的司机的其他值
+可以直接在第一步就进行计算，而不用合并！！！
+![image](https://user-images.githubusercontent.com/105503216/184595882-6e01e2d7-79d7-4c47-9dd2-e44715121654.png)   
+
+``` python
+SELECT city, driver_id, avg_grade, avg_order_num, avg_mileage
+FROM
+(SELECT *, 
+    RANK() OVER (PARTITION BY city ORDER BY avg_grade DESC) AS rk 
+FROM
+(SELECT city, driver_id, 
+    ROUND(AVG(grade),1) AS avg_grade, 
+    ROUND(COUNT(*) / COUNT(DISTINCT DATE_FORMAT(order_time, '%Y-%m-%d')),1) AS avg_order_num,   # 关键是想一想需要的结果怎么求！！！平均每天的order就是用order数/天数
+    ROUND(SUM(mileage) / COUNT(DISTINCT DATE_FORMAT(order_time, '%Y-%m-%d')),3) AS avg_mileage
+FROM tb_get_car_order o
+JOIN tb_get_car_record r
+ON o.order_id = r.order_id
+GROUP BY city, driver_id) sub1) sub2
+WHERE rk = 1
+ORDER BY avg_order_num 
+```
+
