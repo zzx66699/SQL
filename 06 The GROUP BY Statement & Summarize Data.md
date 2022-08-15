@@ -178,7 +178,45 @@ Cum(ulative) sum 不断地累计求和
 SELECT SUM(standard_qty) OVER (ORDER BY occurred_at) AS cum_sum
 FROM orders;
 ```
-![图片2](https://user-images.githubusercontent.com/105503216/176368932-1a0c54d4-dc9a-4a71-a60e-0ba808b20ad0.png)  
+![图片2](https://user-images.githubusercontent.com/105503216/176368932-1a0c54d4-dc9a-4a71-a60e-0ba808b20ad0.png)    
+
+### 可以使用SUM..OVER(... rows xx preceding) 来求前几列的sum值
+ 
+``` SQL
+SELECT dt, 
+    ROUND(SUM(finish_num) OVER (ORDER BY dt rows 6 preceding) / 7,2) AS finish_num_7d,  
+    ROUND(SUM(cancel_num) OVER (ORDER BY dt rows 6 preceding) / 7,2) AS cancel_num_7d
+FROM
+(SELECT DATE(order_time) AS dt,
+COUNT(start_time) AS finish_num,
+    COUNT(*) - COUNT(start_time) AS cancel_num
+FROM tb_get_car_order
+WHERE DATE(order_time) BETWEEN '2021-09-25' AND '2021-10-03'
+GROUP BY dt) sub1
+```
+
+第一行是0，2到6行和真正能开始计算的第7行的值相同  
+![image](https://user-images.githubusercontent.com/105503216/184602458-9a3aa43b-70dd-42aa-b52a-687835673326.png)
+![image](https://user-images.githubusercontent.com/105503216/184602678-4289e408-b881-42e4-8dec-00ec09907b1c.png)
+
+![image](https://user-images.githubusercontent.com/105503216/184602212-f6c23746-870b-437f-980b-2c12f2a2148e.png)  
+
+``` SQL
+SELECT *
+FROM
+(SELECT dt, 
+    ROUND(SUM(finish_num) OVER (ORDER BY dt rows 6 preceding) / 7,2) AS finish_num_7d,
+    ROUND(SUM(cancel_num) OVER (ORDER BY dt rows 6 preceding) / 7,2) AS cancel_num_7d
+FROM
+(SELECT DATE(order_time) AS dt,
+COUNT(start_time) AS finish_num,
+    COUNT(*) - COUNT(start_time) AS cancel_num
+FROM tb_get_car_order
+WHERE DATE(order_time) BETWEEN '2021-09-25' AND '2021-10-03'
+GROUP BY dt) sub1) sub2
+WHERE dt BETWEEN '2021-10-01' AND '2021-10-03'
+ORDER BY dt
+```
 
 ## 关于中位数
 ### 求位置  
