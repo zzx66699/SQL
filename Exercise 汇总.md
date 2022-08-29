@@ -451,3 +451,20 @@ WHERE DAYOFWEEK(event_time) BETWEEN 2 AND 6 ) sub1
 GROUP BY period
 ORDER BY get_car_num
 ```
+
+## 23.请你统计回答过教育类问题的用户里有多少用户回答过职场类问题
+思路就是先把教育问题的用户id求出来，然后在回答过职场问题的用户里面筛选
+
+``` SQL
+SELECT COUNT(DISTINCT author_id) AS num
+FROM issue_tb it
+JOIN answer_tb at
+ON it.issue_id = at.issue_id
+WHERE issue_type = 'Career' AND 
+author_id IN
+    (SELECT author_id
+    FROM issue_tb it
+    JOIN answer_tb at
+    ON it.issue_id = at.issue_id
+    WHERE issue_type = 'Education')
+```
