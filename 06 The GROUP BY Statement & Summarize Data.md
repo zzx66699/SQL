@@ -290,7 +290,8 @@ ORDER BY median
 
 
 
-## The ROW_NUMBER & RANK & DENSE_RANK operator 排序\排名
+## The ROW_NUMBER & RANK & DENSE_RANK operator 排序\排名  
+注意！如果列名要是rank，必须加上'rank'  
 row_number仅仅是从1-n的列一下行名 不会有重复的
 ``` sql
 SELECT account_id, occurred_at, ROW_NUMBER() OVER (ORDER BY occurred_at) AS rownumber
