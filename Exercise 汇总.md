@@ -468,3 +468,21 @@ author_id IN
     ON it.issue_id = at.issue_id
     WHERE issue_type = 'Education')
 ```
+
+## 24. 两列数字相减 
+为了避免出现  
+相减的值小于0则会报错（BIGINT UNSIGNED value is out of range）  
+使用IF  
+
+``` sql
+SELECT DISTINCT num AS ConsecutiveNums
+FROM
+    (SELECT num, IF(rk1>=rk2, rk1-rk2, rk2-rk1) AS rk
+    FROM 
+    (SELECT *, 
+            ROW_NUMBER() OVER (ORDER BY num, id) AS rk1, 
+            ROW_NUMBER() OVER (ORDER BY id) AS rk2
+    FROM Logs) sub1 ) sub2
+GROUP BY num, rk
+HAVING COUNT(*) >= 3
+```
