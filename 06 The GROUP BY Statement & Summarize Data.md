@@ -225,7 +225,8 @@ ORDER BY dt
 求位置比较简单 只需要考虑个数就可以  
 奇数start和end相同 偶数不同  
 ROUND()是四舍五入
-``` python
+
+``` SQL
 SELECT job, 
     ROUND(COUNT(*) / 2) AS start,   # 自动五入进一个数
     ROUND((COUNT(*)+1) / 2) AS end
@@ -234,6 +235,25 @@ GROUP BY job
 ORDER BY job
 ```
 
+### 展开的数据 求具体是多少
+一列数 从小到大排序 标号 中位数的序号一定处在数量/2 和数量/2+1 之间  
+奇数个 比如5个 中位数3 序号在2.5和3.5之间   
+偶数个 比如6个 中位数3、4 序号在3和4之间  
+
+<img width="637" alt="image" src="https://user-images.githubusercontent.com/105503216/191709476-4e9a3eb8-6dff-48f0-b0a1-bed68b7a6c59.png">  
+
+``` sql
+SELECT id, company, salary
+FROM 
+(SELECT *, 
+    ROW_NUMBER() OVER (PARTITION BY company ORDER BY salary) AS rk,
+    COUNT() OVER (PARTITION BY company) AS ct   # 这一步出来的结果 所有company相同的是一个数
+FROM Employee) sub1
+WHERE rk >= ct/2 AND rk <= ct/2 + 1
+```
+<img width="233" alt="image" src="https://user-images.githubusercontent.com/105503216/191716404-9eba486f-f231-434b-a408-ca22e3b6ae98.png">
+
+
 ### 合并的数据求是哪个 
 <img width="272" alt="image" src="https://user-images.githubusercontent.com/105503216/182999850-3f0c009d-6144-4280-ad47-8be6ee1a1c4d.png"><img width="660" alt="image" src="https://user-images.githubusercontent.com/105503216/182999948-5d66c896-56e8-4047-bec7-f10e88b65ec6.png">  
 核心思想：当某一数的正序和逆序累计均大于整个序列的数字个数的一半即为中位数  
@@ -241,11 +261,11 @@ ORDER BY job
 SELECT grade
 FROM
 (SELECT grade, 
-    (SELECT SUM(number) / 2 FROM class_grade) AS half_total,  # 这里是个数 所以必须sub 不能直接sum 不然就只有一行了
+     SUM(number) OVER () AS total,  # 不能直接sum 不然就只有一行了 也可以用sub求一个数
      SUM(number) OVER (ORDER BY grade) AS sum_nb, 
      SUM(number) OVER (ORDER BY grade DESC) AS sum_nb_desc
 FROM class_grade) sub1
-WHERE sum_nb >= half_total AND sum_nb_desc >= half_total
+WHERE sum_nb >= total/2 AND sum_nb_desc >= half_total/2
 ORDER BY grade;
 ```
 
