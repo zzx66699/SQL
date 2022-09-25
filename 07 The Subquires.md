@@ -20,6 +20,7 @@ FROM employees
 WHERE salary > (SELECT AVG(salary) FROM employees);
 ```
 ![image](https://user-images.githubusercontent.com/105503216/176987175-149500fc-e2dd-4e11-8c26-74df0df7ba89.png)  
+
 EXERCISE2
 ``` sql
 # find out all the orders that occurs in the latest month and compute the average orders
@@ -39,8 +40,19 @@ SELECT e.emp_no, m.emp_no AS manager
 FROM dept_emp e
 JOIN dept_manager m
 ON e.dept_no = m.dept_no
-WHERE e.emp_no NOT IN (SELECT emp_no FROM dept_manager)   # 千万不能WHERE e.emp_no NOT IN emp_no 
+WHERE e.emp_no NOT IN (SELECT emp_no FROM dept_manager)   # 千万不能WHERE e.emp_no NOT IN emp_no  
 ```
+
+EXERCISE4  
+<img width="647" alt="Screenshot 2022-09-25 at 4 26 07 PM" src="https://user-images.githubusercontent.com/105503216/192134739-53abca81-b447-4e3b-a4ef-bd946c017ddc.png">  
+
+``` SQL
+SELECT customer_id
+FROM Customer 
+GROUP BY customer_id
+HAVING COUNT(DISTINCT product_key) = (SELECT COUNT(*) FROM Product)  # 在这里用distinct
+```
+
 ## Subqueires in SELECT statement
 按列来看 前面几列已经列好了  
 需要对应着前面几列每一行的值 来生成后面的列每一行的值  
