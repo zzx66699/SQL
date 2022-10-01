@@ -104,6 +104,19 @@ JOIN employee m
     ON e.reports_to = m.employee_id;
 ```
 
+EXERCISE:  
+<img width="632" alt="image" src="https://user-images.githubusercontent.com/105503216/193403402-6d2d39f1-96f7-462c-a7f2-c7e41b58cca0.png">
+
+``` SQL
+SELECT DISTINCT e1.employee_id
+FROM Employees e1
+JOIN Employees e2
+ON e1.manager_id = e2.employee_id
+JOIN Employees e3
+ON e2.manager_id = e3.employee_id
+WHERE e3.manager_id = 1 AND e1.employee_id != 1
+```
+
 ## Cross JOIN
 把表1中的每一行和表2中的每一行combine
 ``` sql
