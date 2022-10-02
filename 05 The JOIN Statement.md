@@ -117,16 +117,21 @@ ON e2.manager_id = e3.employee_id
 WHERE e3.manager_id = 1 AND e1.employee_id != 1
 ```
 
-## Cross JOIN
-把表1中的每一行和表2中的每一行combine
+## Cross JOIN 笛卡尔积
+把表1中的每一行和表2中的每一行combine   
+
+<img width="262" alt="image" src="https://user-images.githubusercontent.com/105503216/193438435-d98b49c4-4d62-49e9-ae6b-f266bdd3eca7.png">  
+
 ``` sql
-SELECT 
-    c.first_name AS customer,
-    p.name AS product
-FROM customers c
-CROSS JOIN products p
-ORDER BY c.first_name
+SELECT *
+FROM Students s
+CROSS JOIN Subjects u
 ```
+
+<img width="352" alt="image" src="https://user-images.githubusercontent.com/105503216/193438477-3f2cc22c-21ba-42e4-81db-a0655097328e.png">  
+
+
+
 One of the most common use cases for self JOINs is in cases where two events occurred, one after another.   
 在同一个表中 的两个时间 相距不超过xx天  
 EXERCISE:
