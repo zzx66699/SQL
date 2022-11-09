@@ -1,4 +1,4 @@
-# Chapter2 各功能语句汇总
+# Chapter2 Different Operators
 ## The SELECT clause
 AS: set the name of columns
 ``` sql
@@ -116,6 +116,10 @@ FROM accounts;
 ``` sql
 SELECT TRIM('    EHUI&U2  ') AS result;
 ```
+
+sometimes the value may include blank  
+we need to return this values  
+so add 'WHERE TRIM() = XX' help us to return all the values  
 
 ## The LOWER & UPPER operator 大小写
 ``` sql
