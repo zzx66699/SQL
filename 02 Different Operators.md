@@ -515,4 +515,13 @@ FROM Customers
 WHERE phone IS NULL
 ```
 
+## The CAST operator
+<img width="528" alt="image" src="https://user-images.githubusercontent.com/105503216/200735151-c15eb7cc-56a7-446d-a737-0db0d94c78f8.png">  
+<img width="288" alt="image" src="https://user-images.githubusercontent.com/105503216/200735176-8fc5fb04-1665-48fa-adfa-0860014e4903.png">    
+CAST is used to change the column to another datatype   
+<img width="503" alt="image" src="https://user-images.githubusercontent.com/105503216/200735342-b7fd66ed-d202-4002-8828-ade6fba34011.png">  
+<img width="182" alt="image" src="https://user-images.githubusercontent.com/105503216/200735365-0b8bf628-20bd-4cfa-9174-5116fcad833e.png">
+
+
+
 
