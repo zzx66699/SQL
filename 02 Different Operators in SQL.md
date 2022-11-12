@@ -1,5 +1,5 @@
-# Chapter2 Different Operators
-## The SELECT clause
+# Chapter2 Different Operators in SQL
+## 1. The SELECT clause
 AS: set the name of columns
 ``` sql
 USE crmreview;
@@ -11,7 +11,7 @@ SELECT id,
 FROM orders
 ```
 
-## The DISTINCT operator 非重复值
+## 2. The DISTINCT operator 非重复值
 exclude duplicates  
 ``` sql
 # What are the different channels used by account 1001?  
@@ -31,7 +31,7 @@ FROM try;
 ```
 <img width="85" alt="image" src="https://user-images.githubusercontent.com/105503216/178090383-e8677b8e-cb89-4bf0-8219-730655378b05.png">
 
-## The MOD() operator 或者 % 求余数
+## 3. The MOD() operator 或者 % 求余数
 ``` sql
 SELECT MOD(5,2);
 
@@ -46,11 +46,11 @@ SELECT 4 % 2;
 0
 ```
 
-## 取整
+## 4. 取整
 ceil (value) 产生大于或等于指定值（value）的最小整数。  
 floor（value）与 ceil（）相反，产生小于或等于指定值（value）的最小整数。
 
-## The CASE WHEN ... THEN ... END operator 条件
+## 5. The CASE WHEN ... THEN ... END operator 条件
 ``` sql
 SELECT CASE WHEN total_amount > 3000 THEN 'large'                                                   # 只有一次WHEN
             ELSE 'small' 
@@ -83,7 +83,7 @@ FROM Stocks
 GROUP BY stock_name;
 ```
 
-## The RIGHT & LEFT operator 左右取值
+## 6. The RIGHT & LEFT operator 左右取值
 ``` sql
 SELECT LEFT(name, 3)        # 取name这一列每一行值的前3个字符
 FROM accounts;
@@ -97,7 +97,7 @@ SELECT a.name,
 FROM accounts;
 ```
 
-## The STRPOS & POSITION operator 位置
+## 7. The STRPOS & POSITION operator 位置
 返回在a里b的index：STRPOS(a,b) 或者 POSITION(B IN A)
 ``` sql
 SELECT POSITION(' ' IN primary_poc) AS position     # 在primary_poc中空格的位置
@@ -112,7 +112,7 @@ SELECT LEFT(primary_poc, POSITION(' ' IN primary_poc)-1) AS first_name,
 FROM accounts;
 ```
 
-## The TRIM operator 删去前后的空格
+## 8. The TRIM operator 删去前后的空格
 ``` sql
 SELECT TRIM('    EHUI&U2  ') AS result;
 ```
@@ -121,13 +121,13 @@ sometimes the value may include blank
 we need to return this values  
 so add 'WHERE TRIM() = XX' help us to return all the values  
 
-## The LOWER & UPPER operator 大小写
+## 9. The LOWER & UPPER operator 大小写
 ``` sql
 SELECT LOWER(name)
 FROM accounts;
 ```
 
-## The LENGTH operator 长度
+## 10. The LENGTH operator 长度
 LENGTH()是按照字节来统计的，CHAR_LENGTH()是按照字符来统计的   
 一个包含5个字符且每个字符占两个字节(比如汉字)的字符串而言，LENGTH()返回长度10，CHAR_LENGTH()返回长度是5；如果对于单字节的字符，则两者返回结果相同。  
 还有那种特殊字符也注意用CHAR_LENGTH好一点  
@@ -137,9 +137,7 @@ SELECT CHAR_LENGTH(website)
 FROM accounts;
 ```
 
-
-
-## The SUBSTR operator 截取一部分
+## 11. The SUBSTR operator 截取一部分
 SUBSTR(TEXT, START, LENGTH)
 ``` sql
 SELECT SUBSTR('ZZX XIXI HAHA', 3,5) AS result;
@@ -156,10 +154,10 @@ SELECT SUBSTR('ASDFGH',2);
 SDFGH
 ```
 
-## The ROUND operator 保留几位小数
+## 12. The ROUND operator 保留几位小数
 ROUND(xx,几位数)
 
-## The REPLACE operator 代替
+## 13. The REPLACE operator 代替
 用b替换a：REPLACE(TEXT,A,B)
 ``` sql
 SELECT REPLACE('ZZX','X','Z') AS result;
@@ -181,7 +179,7 @@ SELECT (LENGTH(All_string) - LENGTH(REPLACE(All_string, Target_string, ''))) / L
 FROM table
 ```
 
-## The CONCAT operator 连结
+## 14. The CONCAT operator 连结
 ``` sql
 SELECT CONCAT('Z','Z','X') AS result;
 
@@ -203,7 +201,7 @@ GROUP BY sell_date
 ORDER BY sell_date;
 ```
 
-## The substring_index() operator 按某种方法分割 然后取数
+## 15. The substring_index() operator 按某种方法分割 然后取数
 substring_index(str,delim,count)  
 str:要处理的字符串 delim:分隔符   
 count:计数 正数就是从左往右数第n个分隔符左边的所有内容 负数就是从右往左数第n个分隔符右边的所有内容   
@@ -227,7 +225,7 @@ GROUP BY gender;
 ```
 注意：通过重复的substring_index(substring_index(),)可以提取出中间的字符串
 
-## The UNION operator 两个表格行的合并
+## 16. The UNION operator 两个表格行的合并
 rbind合并两个select之后的table  
 UNION（会删去重复的行）或者UNION ALL（这个不会删去重复的行）  
 
@@ -267,7 +265,7 @@ GROUP BY question_id
 ORDER BY uv DESC, pv DESC) sub1
 ```
 
-## The IFNULL operation
+## 17. The IFNULL operation
 ![image](https://user-images.githubusercontent.com/105503216/178181864-5776e10e-0854-4a03-ae7f-db9aa14e1ea9.png)
 ![image](https://user-images.githubusercontent.com/105503216/178181878-9a44b59f-e582-4433-ae4a-4b1fd6906e67.png)
 ``` sql
@@ -284,7 +282,7 @@ ORDER BY travelled_distance DESC, u.name;
 SELECT IFNULL(SUM(if_payment)/SUM(if_refund),0) AS refund_rate;
 ```
 
-## The LEAD & LAG operator 关于延后和提前
+## 18. The LEAD & LAG operator 关于延后和提前
 LAG(要延后的那一列, 延后的个数) OVER (ORDER BY 要根据什么排列)
 ``` sql
 # 延后joindate那一列
@@ -347,7 +345,7 @@ ORDER BY seat_id
 ```
 
 
-## = & != 
+## 19. = & != 
 ``` sql
 SELECT *
 FROM table1
@@ -364,7 +362,7 @@ FROM customer
 WHERE referee_id != 2 OR referee_id IS NULL;
 ```
 
-## The AND & OR & NOT operater
+## 20. The AND & OR & NOT operater
 ``` sql
 SELECT *
 FROM table
@@ -389,7 +387,7 @@ WHERE (name LIKE 'C%' OR name LIKE 'W%') AND                      # 注意多个
       primary_poc NOT LIKE '%eana%';
 ```
 
-## The BETWEEN ... AND... operator
+## 21. The BETWEEN ... AND... operator
 在两个中间 BETWEEN 是大于等于 和 小于等于
 ``` sql
 SELECT *
@@ -415,14 +413,14 @@ FROM table
 WHERE w.occurred_at BETWEEN '2015-01-01' AND '2016-01-01'；         # 到凌晨0点 这里指的是2015全年
 ```
 
-## The IN & NOT IN operator 在一组值中的任意一个
+## 22. The IN & NOT IN operator 在一组值中的任意一个
 ``` sql
 SELECT *
 FROM products
 WHERE quantity_in_stock IN (49, 38, 72)；
 ```
 
-## EXISTS & NOT EXISTS
+## 23. EXISTS & NOT EXISTS
 什么时候用EXISTS，什么时候用IN？  
 当从表小时，IN查询的效率较高；先执行子查询，再带到外面去，子查询只需要执行一次。
 当主表小时，EXISTS查询的效率较高；主查询有多少条数据，子查询就要执行多少次   
@@ -440,7 +438,7 @@ WHERE NOT EXISTS (SELECT emp_no
                   WHERE employees.emp_no=dept_emp.emp_no)
 ```
                   
-## The LIKE & NOT LIKE operator 包含某个值
+## 24. The LIKE & NOT LIKE operator 包含某个值
 注意所有都不区分大小写
 ``` sql
 SELECT *
@@ -477,7 +475,7 @@ WHERE s.name LIKE '% K%'           # 注意这里有一个空格！！！表示�
 ```
 
 
-## The REGEXP operator 正则表达式
+## 25. The REGEXP operator 正则表达式
 ``` sql
 SELECT *
 FROM Customers
@@ -508,19 +506,25 @@ FROM Customers
 WHERE last_name REGEXP '[a-h]e' ;    # [a-h] represents letter a to h 可以是ae到he中的任意一个
 ```
 
-## The IS NULL & IS NOT NULL operator
+## 26. The IS NULL & IS NOT NULL operator
 ``` sql
 SELECT *
 FROM Customers
 WHERE phone IS NULL
 ```
 
-## The CAST operator
+## 27. The CAST operator
+CAST is used to change the column to another datatype  
+
+### 27.1 transfer into FLOAT
 <img width="528" alt="image" src="https://user-images.githubusercontent.com/105503216/200735151-c15eb7cc-56a7-446d-a737-0db0d94c78f8.png">  
 <img width="288" alt="image" src="https://user-images.githubusercontent.com/105503216/200735176-8fc5fb04-1665-48fa-adfa-0860014e4903.png">    
-CAST is used to change the column to another datatype   
 <img width="503" alt="image" src="https://user-images.githubusercontent.com/105503216/200735342-b7fd66ed-d202-4002-8828-ade6fba34011.png">  
 <img width="182" alt="image" src="https://user-images.githubusercontent.com/105503216/200735365-0b8bf628-20bd-4cfa-9174-5116fcad833e.png">
+
+### 27.1 transfer into DATE datatype
+<img width="435" alt="image" src="https://user-images.githubusercontent.com/105503216/201454683-3ec06616-53c5-4544-a1f9-713f79eb2a60.png">
+
 
 
 
