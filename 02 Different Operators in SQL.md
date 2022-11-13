@@ -50,16 +50,18 @@ SELECT 4 % 2;
 ceil (value) 产生大于或等于指定值（value）的最小整数。  
 floor（value）与 ceil（）相反，产生小于或等于指定值（value）的最小整数。
 
-## 5. The CASE WHEN ... THEN ... END operator 条件
+## 5. The CASE operator 条件
 ``` sql
-SELECT CASE WHEN total_amount > 3000 THEN 'large'                                                   # 只有一次WHEN
-            ELSE 'small' 
-       END AS levels,                                                                               # 命名为levels
-       
-       CASE WHEN toal >= 2000 THEN 'at least 2000'                                                  # 好几次WHEN
-            WHEN total < 2000 AND total >= 1000 TEHN 'between 1000 and 2000'                        # 两个条件用AND连结
-            ELSE 'less than 1000' 
-       END AS order_category,
+SELECT 
+  CASE 
+    WHEN total_amount > 3000 THEN 'large'                                                   # 只有一次WHEN
+    ELSE 'small' 
+    END AS levels,                                                                               # 命名为levels
+  CASE 
+    WHEN toal >= 2000 THEN 'at least 2000'                                                  # 好几次WHEN
+    WHEN total < 2000 AND total >= 1000 TEHN 'between 1000 and 2000'                        # 两个条件用AND连结
+    ELSE 'less than 1000' 
+    END AS order_category,
 FROM orders
 ```
 EXAMPLE:  
