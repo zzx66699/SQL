@@ -522,10 +522,16 @@ CAST is used to change the column to another datatype
 <img width="503" alt="image" src="https://user-images.githubusercontent.com/105503216/200735342-b7fd66ed-d202-4002-8828-ade6fba34011.png">  
 <img width="182" alt="image" src="https://user-images.githubusercontent.com/105503216/200735365-0b8bf628-20bd-4cfa-9174-5116fcad833e.png">
 
-### 27.1 transfer into DATE datatype
+### 27.2 transfer into DATE datatype
 <img width="435" alt="image" src="https://user-images.githubusercontent.com/105503216/201454683-3ec06616-53c5-4544-a1f9-713f79eb2a60.png">
 
+## 28. COALESCE
+COALESE(return_column, return_column if the first column is null)
 
+```SQL
+SELECT COALESCE(product, product_code)
+FROM `customer_data.customer_purchase ` 
+```
 
 
 
