@@ -1,4 +1,4 @@
-# Chapter4 The ORDER BY & LIMIT Statement
+# Chapter3 The ORDER BY & LIMIT Statement
 ## ORDER BY
 ORDER BY: default in increasing order, use DESC to obtain descending order
 ``` sql
@@ -37,31 +37,6 @@ GROUP BY customer_number
 ORDER BY COUNT(*) DESC    # 按照每一组的数量排序
 LIMIT 1
 ```
-EXERCISE1: 常常用来筛选重复的个数  
-<img width="523" alt="image" src="https://user-images.githubusercontent.com/105503216/178404862-14e19726-7bd4-40f9-809d-c28666ad5bb0.png">   
-
-``` sql
-SELECT email AS Email   # 通过分组COUNT很容易求出重复的
-FROM Person
-GROUP BY email
-HAVING COUNT(*) > 1;
-```
-### 注意distinct a 和order by b在一起很容易报错 因为distinct a先执行 如果一个a对应好几个b 不知道order 的时候应该用哪一个b对应
-这时候要换成group by 而不是distinct
-
-``` python
-SELECT music_name
-FROM follow f
-JOIN music_likes m
-ON f.follower_id = m.user_id
-JOIN music c
-ON c.id = m.music_id
-WHERE f.user_id = 1 AND music_id NOT IN 
-    (SELECT music_id FROM music_likes WHERE user_id = 1)
-GROUP BY music_id      
-ORDER BY music_id;
-```
-不可以写成 select distinct music_name ...... order by music_id !!!!!!!!!!!!!
 
 ## LIMIT
 <img width="627" alt="image" src="https://user-images.githubusercontent.com/105503216/184058784-cae55ec7-0d1b-405d-8c16-67f33e96d968.png">  
