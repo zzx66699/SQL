@@ -1,4 +1,4 @@
-# Chapter4 GROUP BY Statement & Summarize data
+# Chapter4 GROUP BY Statement 
 ## The aggregation function 数数最大最小求和平均值方差标准差等
 Only executed on non-NULL values, ignore NULL values
 ``` sql
