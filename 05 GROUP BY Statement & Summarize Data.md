@@ -1,4 +1,4 @@
-# Chapter6 The GROUP BY Statement & Summarize data
+# Chapter5 GROUP BY Statement & Summarize data
 ## The aggregation function 数数最大最小求和平均值方差标准差等
 Only executed on non-NULL values, ignore NULL values
 ``` sql
@@ -10,6 +10,7 @@ SELECT COUNT(DISTINCT client_id) AS total_clients,      # 使用DISTINCT去remov
 FROM accounts;
 ```
 注意sql中没有中位数median的函数  
+
 ### COUNT(a)在a的值为null的时候会算0  
 <img width="476" alt="image" src="https://user-images.githubusercontent.com/105503216/180939647-ffd67d2d-e039-46a7-ad31-b2e2dd9709b1.png">    
 求每一个product有多少订单  
