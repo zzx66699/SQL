@@ -1,4 +1,4 @@
-# Chapter3 ORDER BY & LIMIT Statement
+# Chapter6 ORDER BY & LIMIT Statement
 ## ORDER BY
 ORDER BY: default in increasing order, use DESC to obtain descending order
 ``` sql
