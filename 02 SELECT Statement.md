@@ -1,4 +1,4 @@
-# Chapter2 Different Operators in SQL
+# Chapter2 SELECT Statement
 ## 1. The SELECT clause
 AS: set the name of columns
 ``` sql
