@@ -1,4 +1,4 @@
-# Chapter7 The Subquires
+# Chapter6 WHERE Statement
 ## Subqueries in WHERE statement
 ``` sql
 # find products that are more expensive than LETTUCE(id=3)
