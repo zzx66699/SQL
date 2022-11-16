@@ -1,4 +1,4 @@
-# Chapter5 The JOIN Statement
+# Chapter5 JOIN Statement
 ## Inner JOIN 结果只会出现几个表共有的值
 ``` sql
 SELECT *
