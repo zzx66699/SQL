@@ -347,20 +347,40 @@ ORDER BY seat_id
 ```
 
 
-## 27. The CAST operator
+## 19. The CAST operator
 CAST is used to change the column to another datatype  
 
-### 27.1 transfer into FLOAT
-<img width="528" alt="image" src="https://user-images.githubusercontent.com/105503216/200735151-c15eb7cc-56a7-446d-a737-0db0d94c78f8.png">  
-<img width="288" alt="image" src="https://user-images.githubusercontent.com/105503216/200735176-8fc5fb04-1665-48fa-adfa-0860014e4903.png">    
-<img width="503" alt="image" src="https://user-images.githubusercontent.com/105503216/200735342-b7fd66ed-d202-4002-8828-ade6fba34011.png">  
-<img width="182" alt="image" src="https://user-images.githubusercontent.com/105503216/200735365-0b8bf628-20bd-4cfa-9174-5116fcad833e.png">
+### 19.1 Transfer into FLOAT
 
-### 27.2 transfer into DATE datatype
+``` SQL
+SELECT 
+    CAST(purchase_amount AS FLOAT64) AS amount
+FROM dataset
+```
+
+### 19.2 Transfer into DATE datatype
 <img width="435" alt="image" src="https://user-images.githubusercontent.com/105503216/201454683-3ec06616-53c5-4544-a1f9-713f79eb2a60.png">
 
-## 28. COALESCE
-COALESE(return_column, return_column if the first column is null)
+### 19.3 Converting a date to a datetime
+Datetime values have the format of YYYY-MM-DD hh: mm: ss format.
+
+``` SQL
+SELECT CAST(MyDate AS DATETIME)
+FROM Mytable
+```
+
+### 19.4 Converting a date to a string
+
+``` sql
+SELECT CAST(MyDate AS STRING) FROM MyTable
+```
+
+## 20. COALESCE 
+
+```
+COALESE(a, b)
+```
+return a, if a is null then b 
 
 ```SQL
 SELECT COALESCE(product, product_code)
