@@ -181,7 +181,7 @@ SELECT (LENGTH(All_string) - LENGTH(REPLACE(All_string, Target_string, ''))) / L
 FROM table
 ```
 
-## 14. The CONCAT operator 连结
+## 14. The CONCAT operator 连接
 ``` sql
 SELECT CONCAT('Z','Z','X') AS result;
 
@@ -189,7 +189,23 @@ SELECT CONCAT('Z','Z','X') AS result;
 result
 ZZX    
 ```
-GROUP_CONCAT 分组连接  
+
+EXERCISE: Find which route is most popular with different user types 
+
+``` SQL
+SELECT 
+    usertype,
+    CONCAT(start_station_name,"to", end_station_name) AS route,
+    COUNT(*) num_trips,
+    ROUND(AVG(tripduration/60),2) AS avg_duration
+FROM `bigquery-public-data.new_york_citibike.citibike_trips` 
+GROUP BY usertype, start_station_name, end_station_name
+ORDER BY num_trips DESC
+LIMIT 5
+```
+<img width="659" alt="image" src="https://user-images.githubusercontent.com/105503216/202638413-a04d33dd-af81-4da2-ae5a-154ab1c12109.png">
+
+### 14.1 GROUP_CONCAT 分组连接  
 GROUP_CONCAT(要连接的那一列 ORDER BY 按照什么列连接 SEPARATOR '连接符')  
 ![image](https://user-images.githubusercontent.com/105503216/177463689-66c091ef-dc9d-4bea-9577-45a5252e1a99.png)
 ![image](https://user-images.githubusercontent.com/105503216/177463716-a3f33d4f-047f-44de-9f66-70a2f75341ba.png)
