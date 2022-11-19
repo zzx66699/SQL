@@ -1,5 +1,8 @@
 # Chapter5 JOIN Statement
-## Inner JOIN 结果只会出现几个表共有的值
+## 1 Inner JOIN 
+nner JOIN is a function that returns records with matching values in both tables  
+结果只会出现几个表共有的值
+
 ``` sql
 SELECT *
 FROM orders o
@@ -7,7 +10,7 @@ JOIN customers c
     ON o.customer_id = c.customer_id;
 ```
 
-### Join more than 2 tables 多个table结合 
+### 1.1 Join more than 2 tables 多个table结合 
 如果是一个表要个另一个表结合多次 记得把另外一个表的alias改了 就不会出现重复问题了！！！
 
 ``` sql
@@ -24,7 +27,7 @@ JOIN order_statuses os
     ON o.status = os.order_status_id
 ```
 
-### 多个join条件
+### 1.2 多个join条件
 ``` sql
 SELECT *
 FROM order_items oi
@@ -33,8 +36,10 @@ JOIN order_item_notes oin
        oi.product_id = oin.product_id
 ```
 
-## Outer JOIN 左JOIN就出现左边表的所有值 没有的用NULL填补
-LEFT (OUTER) JOIN RIGHT (OUTER) JOIN OUTER is optional
+## 2. LEFT & RIGHT JOIN
+A LEFT JOIN is a function that will return all the records from the left table and only the matching records from the right table  
+左JOIN就出现左边表的所有值 没有的用NULL填补  
+
 ``` sql
 SELECT
     c.customer_id,
@@ -45,18 +50,19 @@ LEFT JOIN orders o
     ON o.customer_id = c.customer_id
 ORDER BY c.customer_id
 ```
-## FULL JOIN 
-连接表将包含的所有记录来自两个表，并使用NULL值作为两侧缺失匹配结果
+
+## 3. OUTER JOIN 
+OUTER join combines RIGHT and LEFT JOIN to return all matching records in both tables.  
+连接表将包含的所有记录来自两个表，并使用NULL值作为两侧缺失匹配结果  
 
 ``` sql
-SELECT table1.column1, table2.column2
+SELECT 
+    table1.column1, table2.column2
 FROM table1
-FULL JOIN table2
-ON table1.common_field = table2.common_field;
+FULL OUTER JOIN table2 ON 
+    table1.common_field = table2.common_field;
 ```
-
-注意很多版本里没有FULL JOIN这个表达  
-可以用LEFT JOIN UNION RIGHT JOIN代替；
+<img width="478" alt="image" src="https://user-images.githubusercontent.com/105503216/202827925-8b8067da-61b5-4413-aa6d-d043383aa67f.png">
 
 ## 关于Inner JOIN 和 Outer JOIN的实例
 account  
