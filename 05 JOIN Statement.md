@@ -64,6 +64,32 @@ FULL OUTER JOIN table2 ON
 ```
 <img width="478" alt="image" src="https://user-images.githubusercontent.com/105503216/202827925-8b8067da-61b5-4413-aa6d-d043383aa67f.png">
 
+## 4. Aggregation & JOIN
+通常先JOIN 再进行aggregation 会比较方便  
+
+<img width="417" alt="image" src="https://user-images.githubusercontent.com/105503216/202879393-4615057e-4ef1-4379-b2a8-12e7f5795c50.png"><img width="402" alt="image" src="https://user-images.githubusercontent.com/105503216/202879405-bd8be0fd-4db3-4d22-98d3-9760bc746c9a.png">  
+分别是在warehouse dataset下面的warehouse table 和 orders table  
+
+求orders from different warehouse and how much they contribute to the overall orders  
+
+``` sql
+SELECT
+  warehouse.warehouse_id,
+  CONCAT(warehouse.state, ":",warehouse.warehouse_alias) AS warehouse_name,
+  COUNT(order_id) AS num_orders,
+  ROUND(COUNT(order_id) / (SELECT COUNT(*) FROM `warehouse.orders`),2 ) AS percentage
+FROM `warehouse.warehouse` warehouse
+LEFT JOIN `warehouse.orders` orders 
+  ON warehouse.warehouse_id = orders.warehouse_id
+GROUP BY 
+  warehouse.warehouse_id, 
+  warehouse_name  # 可以使用SELECT中的alias
+ORDER BY num_orders DESC
+```
+<img width="625" alt="image" src="https://user-images.githubusercontent.com/105503216/202879570-11d5f7ad-81a6-4e36-bafd-441762cf18de.png">
+
+
+
 ## 关于Inner JOIN 和 Outer JOIN的实例
 account  
 ![4](https://user-images.githubusercontent.com/105503216/176695403-6ba0bd12-8a90-4963-b607-e38b99bc066f.png)  
