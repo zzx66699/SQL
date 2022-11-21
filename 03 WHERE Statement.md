@@ -201,27 +201,6 @@ FROM web_events
 GROUP BY channel, day) sub       # 子句中 每一行就是每一天
 GROUP BY channel;
 
-# 也可以使用WITH语句 写法相似
-WITH sub AS(
-SELECT COUNT(*) AS total_events,
-       channel
-FROM web_events
-GROUP BY channel, LEFT(occurred_at, 10))
-SELECT channel, AVG(total_events)
-FROM sub
-GROUP BY channel;
-```
-
-## The WITH operation
-多个WITH之间加上, 且不重复使用WITH
-``` sql
-WITH table1 as (SELECT * FROM web_events),
-     table2 as (SELECT * FROM accounts)
-SELECT *
-FROM table1
-JOIN table2
-ON table1.account_id = table2.id;
-```
 
 
 
