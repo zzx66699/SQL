@@ -412,9 +412,9 @@ The EXTRACT command can extract any part from a date/time value.
 ``` SQL
 SELECT 
   Date,
-  EXTRACT(YEAR FROM Date) AS year
+  EXTRACT(YEAR FROM Date) AS year,
+  EXTRACT(MONTH FROM Date) AS month
 FROM `acoustic-env-366213.avocado.avocado_table` 
 ```
-
-<img width="297" alt="image" src="https://user-images.githubusercontent.com/105503216/203062739-1e21328e-0b2b-4e4b-a1c2-4d07dcdd9dda.png">
+<img width="401" alt="image" src="https://user-images.githubusercontent.com/105503216/203071004-082bc039-f3fb-42f4-afb8-f8c921aeb25b.png">
 
