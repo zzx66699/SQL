@@ -49,3 +49,22 @@ WHERE e.name IS NULL
 
 ORDER BY employee_id;
 ```
+
+### 2.2 如果想分别排序 必须在外面套一层SELECT
+
+``` sql
+# order by不能直接出现在union的子句中，但是可以出现在子句的子句中。所以在外面再套一层
+SELECT * FROM 
+(SELECT exam_id AS tid, COUNT(DISTINCT uid) AS uv, COUNT(*) AS pv
+FROM exam_record
+GROUP BY exam_id
+ORDER BY uv DESC, pv DESC) sub1
+
+UNION ALL 
+
+SELECT * FROM
+(SELECT question_id AS tid, COUNT(DISTINCT uid) AS uv, COUNT(*) AS pv
+FROM practice_record
+GROUP BY question_id
+ORDER BY uv DESC, pv DESC) sub1
+```
