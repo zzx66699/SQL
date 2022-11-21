@@ -31,7 +31,9 @@ FROM try;
 ```
 <img width="85" alt="image" src="https://user-images.githubusercontent.com/105503216/178090383-e8677b8e-cb89-4bf0-8219-730655378b05.png">
 
-## 3. The MOD() operator 或者 % 求余数
+## 3. The MOD() operator 或者 % 
+求余数 It returns the remainder of a division calculation
+
 ``` sql
 SELECT MOD(5,2);
 
@@ -403,5 +405,16 @@ SELECT COALESCE(product, product_code)
 FROM `customer_data.customer_purchase ` 
 ```
 
-## 21. 
+## 21. EXTRACT
+The purpose of the EXTRACT command in a query is to extract a part from a given date.   
+The EXTRACT command can extract any part from a date/time value.   
+
+``` SQL
+SELECT 
+  Date,
+  EXTRACT(YEAR FROM Date) AS year
+FROM `acoustic-env-366213.avocado.avocado_table` 
+```
+
+<img width="297" alt="image" src="https://user-images.githubusercontent.com/105503216/203062739-1e21328e-0b2b-4e4b-a1c2-4d07dcdd9dda.png">
 
