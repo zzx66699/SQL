@@ -1,4 +1,30 @@
 # Chapter4 GROUP BY Statement 
+
+## 1. The GROUP BY statement
+注意group_by是可以用select里面的alias的！！！！  
+只有where不可以！！  
+``` sql
+SELECT
+    client_id,
+    SUM(invoice_total) AS total_sales
+FROM invoices
+WHERE invoice_date >= '2019-07-01'
+GROUP BY client_id
+ORDER BY total_sales DESC                # 注意这里是可以用alias的
+```
+
+
+Multiple columns grouping example  
+``` sql
+SELECT
+    state,
+    city,
+    SUM(invoice_total) AS total_sales
+FROM invoices i
+JOIN clients USING (client_id)
+GROUP BY state, city
+```
+
 ## The aggregation function 数数最大最小求和平均值方差标准差等
 Only executed on non-NULL values, ignore NULL values
 ``` sql
@@ -76,28 +102,6 @@ FROM invoices
 WHERE invoice_date BETWEEN '2019-01-01' AND '2019-12-31';
 ``` 
 
-## The GROUP BY statement
-注意group_by是可以用select里面的alias的！！！！  
-只有where不可以！！  
-``` sql
-SELECT
-    client_id,
-    SUM(invoice_total) AS total_sales
-FROM invoices
-WHERE invoice_date >= '2019-07-01'
-GROUP BY client_id
-ORDER BY total_sales DESC                # 注意这里是可以用alias的
-```
-Multiple columns grouping example
-``` sql
-SELECT
-    state,
-    city,
-    SUM(invoice_total) AS total_sales
-FROM invoices i
-JOIN clients USING (client_id)
-GROUP BY state, city
-```
 ### 几个用法区分
 1.如果a和b一一对应 group by a order by b b要么用聚合函数 要么group by a,b      
 <img width="520" alt="image" src="https://user-images.githubusercontent.com/105503216/183277193-89a2dd0b-fefb-4073-b50f-d13964904ab2.png">  
