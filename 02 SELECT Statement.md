@@ -403,5 +403,5 @@ SELECT COALESCE(product, product_code)
 FROM `customer_data.customer_purchase ` 
 ```
 
-
+## 21. 
 
