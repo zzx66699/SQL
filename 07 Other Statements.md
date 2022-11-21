@@ -29,4 +29,23 @@ JOIN table2
 ON table1.account_id = table2.id;
 ```
 
-## 2. UNION
+## 2. UNION & UNION ALL 
+UNION: 会删去重复的行 
+UNION ALL: 不会删去重复的行  
+
+### 2.1 UNION之后可以直接排序 把两个一起排序
+``` sql
+SELECT e.employee_id AS employee_id
+FROM Employees e
+LEFT JOIN Salaries s USING (employee_id)
+WHERE s.salary IS NULL
+
+UNION 
+
+SELECT s.employee_id AS employee_id
+FROM Employees e
+RIGHT JOIN Salaries s USING (employee_id)
+WHERE e.name IS NULL
+
+ORDER BY employee_id;
+```
