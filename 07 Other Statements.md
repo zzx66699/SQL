@@ -48,6 +48,22 @@ JOIN
 ON table1.account_id = table2.id;
 ```
 
+### 1.2 SELECT INTO 
+This statement copies data from one table into a new table but it doesn't add the new table to the database.   
+It's useful if you want to make a copy of a table with a specific condition, like a query with a WHERE clause.   
+(Some system may not recognize this clause)  
+
+``` SQL
+SELECT 
+    *
+INTO
+    AfricaSales
+FROM 
+    GlobalSales
+WHERE 
+    rigion = 'Africa'
+```
+
 ## 2. UNION & UNION ALL 
 UNION: 会删去重复的行   
 UNION ALL: 不会删去重复的行  
