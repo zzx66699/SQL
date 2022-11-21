@@ -30,7 +30,7 @@ ON table1.account_id = table2.id;
 ```
 
 ## 2. UNION & UNION ALL 
-UNION: 会删去重复的行 
+UNION: 会删去重复的行   
 UNION ALL: 不会删去重复的行  
 
 ### 2.1 UNION之后可以直接排序 把两个一起排序
