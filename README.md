@@ -1,5 +1,5 @@
 # SQL
-This includes different operators of SQL and corresponding exercises.
+This includes different operators and functions of SQL and corresponding exercises.
 
 Source from:   
 [牛客网](https://www.nowcoder.com/exam/oj?page=1&tab=SQL%E7%AF%87&topicId=199)  
