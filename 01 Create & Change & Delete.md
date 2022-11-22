@@ -13,41 +13,45 @@ CREATE SCHEMA CRM_review;
 
 ### 3.2 create manually 纯手动创建  
 ``` sql
-CREATE TABLE IF NOT EXISTS 
-	web_events (
-		 id INTEGER AUTO_INCREMENT PRIMARY KEY,     # 列名, data type, 自动增量，作为主键
-		 stu_num CHAR(11)                           # 数字形式表示文本内容  
-		 account_id INTEGER NOT NULL,               # 非0
-		 occurred_at TIMESTAMP,                     # 时间戳
-		 channel VARCHAR(15)                        # 长度为15个字节的可变长度且非Unicode的字符数据
-		 intro TEXT			                        # 通常用于长段文字
-				);
+CREATE TABLE IF NOT EXISTS web_events AS
+(
+    id INTEGER AUTO_INCREMENT PRIMARY KEY,     # 列名, data type, 自动增量，作为主键
+    stu_num CHAR(11)                           # 数字形式表示文本内容  
+    account_id INTEGER NOT NULL,               # 非0
+    occurred_at TIMESTAMP,                     # 时间戳
+    channel VARCHAR(15)                        # 长度为15个字节的可变长度且非Unicode的字符数据
+    intro TEXT			                        # 通常用于长段文字
+);
 
-INSERT INTO 
-	web_events 
-VALUES (
-	1, 1001, '2015-06-07 17:22:12', 'direct'
-		);                                                  # 一行一行地插入
-INSERT INTO 
-	web_events 
-VALUES (
+INSERT INTO web_events VALUES 
+(
+    1, 1001, '2015-06-07 17:22:12', 'direct'
+);                                                  # 一行一行地插入
+INSERT INTO web_events VALUES 
+(
     2, 1001, '2015-02-03 14:03:12', 'direct'
-		);
+);
 ```
 
-### 从其他table中提取创建
+### 3.3 从其他table中提取创建
 可以通过此种方式完整copy  
-需要注意的是 会ignore some attributes(Primary Key, Auto Increment) when copy
+需要注意的是 会ignore some attributes(Primary Key, Auto Increment) when copy 
+
 ``` sql
 CREATE TABLE orders_archived AS
+(
 SELECT * FROM orders
+)
 ```
+
 也可以只提取几列 或者是几列具有特定属性的几行
 ``` sql
 CREATE TABLE IF NOT EXISTS orders1 AS 
+(
 SELECT id, account_id 
 FROM orders                              # 从orders这个table中提取所需列
-WHERE gloss_qty > 10;
+WHERE gloss_qty > 10
+);
 ```
 也可以先把新table的列名和attribute写好  
 
@@ -59,7 +63,7 @@ SELECT first_name, last_name
 FROM actor
 ```
 
-## INSERT的三种方式
+## 4. INSERT的三种方式
 
 ``` python
 # mysql中常用的三种插入数据的语句: 
