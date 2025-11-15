@@ -1,53 +1,44 @@
 # Chapter2 SELECT Statement
 ## 1. The SELECT clause
-AS: set the name of columns
+AS: set the name of columns; it is optional
 ``` sql
 USE crmreview;
 
 SELECT id, 
-       10 AS numbers,                                                 # 一列叫做number 全是10
-       gloss_qty + poster_qty + 100 AS qty,                           # 对原本序列的运算
-       orders.*                                                       # orders这个table里的所有列 这点在多个表合并的时候很常用
+       10 AS numbers,                                                 # A column called "number", all the values are 10
+       gloss_qty + poster_qty + 100 AS qty,                           # calculation
+       orders.*                                                       # all the columns in orders table. this is common when table join 
 FROM orders
 ```
-
-## 2. The DISTINCT operator 非重复值
+-----
+## 2. The DISTINCT operator 
 exclude duplicates  
 ``` sql
 # What are the different channels used by account 1001?  
 # Your final table should have two columns: account name and channel 
 
-SELECT DISTINCT a.name account_name, w.channel channel
+SELECT DISTINCT a.name account_name, w.channel channel     # remove duplicate for a.name and w.channel columns
 FROM accounts a
 JOIN web_events w
 ON a.id = w.account_id
 WHERE a.id = 1001;
 ```
-DISTINCT 意味着后面的所有东西都相同才会被舍去  
-<img width="79" alt="截屏2022-07-09 上午11 42 44" src="https://user-images.githubusercontent.com/105503216/178090289-c2bcd942-8a86-4b2f-9420-9bb97c52d78b.png">  
-``` sql
-SELECT DISTINCT id, year  # DISCTINCT只能使用一次
-FROM try;
-```
-<img width="85" alt="image" src="https://user-images.githubusercontent.com/105503216/178090383-e8677b8e-cb89-4bf0-8219-730655378b05.png">
-
-## 3. The MOD() operator 或者 % 
-求余数 It returns the remainder of a division calculation
-
+-----
+## 3. The MOD() operator OR % 
+It returns the remainder of a division calculation
 ``` sql
 SELECT MOD(5,2);
-
 ---
-1
+# 1
 ```
 
 ``` sql
 SELECT 4 % 2;
 
 ---
-0
+# 0
 ```
-
+---
 ## 4. 取整
 ceil (value) 产生大于或等于指定值（value）的最小整数。  
 floor（value）与 ceil（）相反，产生小于或等于指定值（value）的最小整数。
