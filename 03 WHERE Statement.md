@@ -1,48 +1,5 @@
 # Chapter3 WHERE Statement
-## 1. = & != 
-select all the names that are not referred by the customer with id = 2  
 
-``` sql
-# 只要不是2都可以 就算是NULL也可以
-
-SELECT name
-FROM customer
-WHERE referee_id != 2 OR referee_id IS NULL;
-```
-
-注意这里只能判断非NULL的值 会自动舍去NULL的值  
-所以如果想要保留NULL的值 就要加上OR referee_id IS NULL
-
-## 2. The IN & NOT IN operator 在一组值中的任意一个
-``` sql
-SELECT *
-FROM products
-WHERE quantity_in_stock IN (49, 38, 72)；
-```
-## 3. The AND & OR & NOT operater
-``` sql
-SELECT *
-FROM table
-WHERE order_id = 6 AND unit_price * quantity > 30
-```
-NOT: negate a condition 当要否定多个条件时记得（）
-``` sql
-SELECT *
-FROM Customers
-WHERE NOT (birth_date > '1990-01-01' OR points > 1000)     # 注意日期要加''
-```
-EXERCISE
-``` sql
-# find all the names that stars with 'C' or 'W'
-# primary_poc contains 'ana' or 'Ana'
-# but primary_poc doesn't contain 'eana'
-
-SELECT *
-FROM accounts
-WHERE (name LIKE 'C%' OR name LIKE 'W%') AND                      # 注意多个并列条件的应用 xx和xx是并列
-      (primary_poc LIKE '%ana%' OR primary_poc LIKE '%Ana%') AND
-      primary_poc NOT LIKE '%eana%';
-```
 
 ## Subqueries in WHERE statement
 ``` sql
