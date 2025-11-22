@@ -1,4 +1,74 @@
 # Chapter3 WHERE Statement
+## = & != 
+
+``` sql
+# select all the names that are not referred by the customer with id = 2
+
+SELECT name
+FROM customer
+WHERE referee_id != 2 OR referee_id IS NULL; # = or != only check the non-null values. 
+```
+--------------------------
+## IN & NOT IN operator 
+``` sql
+SELECT *
+FROM products
+WHERE quantity_in_stock IN (49, 38, 72)；
+```
+--------------------------
+## AND & OR & NOT operater
+``` sql
+SELECT *
+FROM table
+WHERE order_id = 6 AND unit_price * quantity > 30
+```
+``` sql
+SELECT *
+FROM Customers
+WHERE NOT (birth_date > '1990-01-01' OR points > 1000)  -- add''for date
+```
+----------
+## % operator
+start with / end with something
+### EXERCISE 1 
+Find all the names that starts with 'C' or 'W';   
+primary_poc contains 'ana' or 'Ana';   
+but primary_poc doesn't contain 'eana'  
+``` sql
+SELECT *
+FROM accounts
+WHERE
+	(name LIKE 'C%' OR name LIKE 'W%') AND   -- shouldn't write like this: name LIKE 'C%' OR 'W%'       
+	(primary_poc LIKE '%ana%' OR primary_poc LIKE '%Ana%') AND
+	primary_poc NOT LIKE '%eana%';
+```
+---------
+## REGEXP operator 
+``` sql
+SELECT *
+FROM Customers
+WHERE last_name REGEXP '^b' AND                 -- start with b
+      fist_name REGEXP 'a$' AND                 -- end with a
+      name REGEXP 'c' AND                       -- contains c
+      characters REGEXP '[as]t' AND             -- includes at or st
+      CITY REGEXP '^[aeiou].*[aeiou]$' OR       -- start with aeiou and end with aeiou
+      ast_name REGEXP '[a-h]e' OR               -- [a-h] represents ANY letter from a to h 
+      CITY REGEXP "^[^aeiou]" OR                -- do not start with vowels; [^a] means not start with a
+      CITY REGEXP '[^aeiou]$'                   -- do not end with vowels
+
+```
+
+
+``` sql
+SELECT *
+FROM Customers
+WHERE last_name REGEXP 'field$|^mac|rose'     
+```
+[] provides a option of a series of letters 只要包含一系列字符 不一定要完全一样  
+其中try是  
+![image](https://user-images.githubusercontent.com/105503216/176995411-dd4b5e99-b20a-4123-9183-e1408e926211.png)
+
+![image](https://user-images.githubusercontent.com/105503216/176995422-79c13137-ff7c-498d-9f15-130e80916354.png)  
 
 
 ## Subqueries in WHERE statement
@@ -244,35 +314,7 @@ WHERE s.name LIKE '% K%'           # 注意这里有一个空格！！！表示�
 ```
 
 
-## 25. The REGEXP operator 正则表达式
-``` sql
-SELECT *
-FROM Customers
-WHERE last_name REGEXP '^b' AND     # b开头
-      fist_name REGEXP 'a$' AND     # a结尾
-      name REGEXP 'c'；             # 包含c
-```
-| searches for multiple words 表示xx或xx的条件
-``` sql
-SELECT *
-FROM Customers
-WHERE last_name REGEXP 'field$|^mac|rose'     
-```
-[] provides a option of a series of letters 只要包含一系列字符 不一定要完全一样  
-其中try是  
-![image](https://user-images.githubusercontent.com/105503216/176995411-dd4b5e99-b20a-4123-9183-e1408e926211.png)
-``` sql
-SELECT *
-FROM try
-WHERE characters REGEXP '[as]t';     # to include at or st
-```
-![image](https://user-images.githubusercontent.com/105503216/176995422-79c13137-ff7c-498d-9f15-130e80916354.png)  
 
-[] can also represents a range of letters 从xx到xx的字符 依然是包含就可以
-``` sql
-SELECT *
-FROM Customers
-WHERE last_name REGEXP '[a-h]e' ;    # [a-h] represents letter a to h 可以是ae到he中的任意一个
 ```
 
 ## 26. The IS NULL & IS NOT NULL operator

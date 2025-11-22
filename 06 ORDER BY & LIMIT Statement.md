@@ -39,6 +39,20 @@ LIMIT 1
 ```
 
 ## LIMIT
+### Example 1
+Query the two cities in STATION with the shortest and longest CITY names, as well as their respective lengths (i.e.: number of characters in the name). If there is more than one smallest or largest city, choose the one that comes first when ordered alphabetically.
+``` SQL
+SELECT CITY, CHAR_LENGTH(CITY) AS LEN
+FROM STATION
+SORT BY LEN, CITY
+LIMIT 1;
+
+
+SELECT CITY, CHAR_LENGTH(CITY) AS LEN
+FROM STATION
+SORT BY LEN DESC, CITY
+LIMIT 1;
+```
 <img width="627" alt="image" src="https://user-images.githubusercontent.com/105503216/184058784-cae55ec7-0d1b-405d-8c16-67f33e96d968.png">  
 都可以理解成行，这样方便一点  
 跳过前5行，从第六行开始取  

@@ -1,17 +1,21 @@
 # Chapter2 SELECT Statement
-## 1. The SELECT clause
+## The SELECT clause
 AS: set the name of columns; it is optional
 ``` sql
 USE crmreview;
 
 SELECT id, 
-       10 AS numbers,                                                 # A column called "number", all the values are 10
-       gloss_qty + poster_qty + 100 AS qty,                           # calculation
-       orders.*                                                       # all the columns in orders table. this is common when table join 
+       10 AS numbers,                                   # A column called "number", all the values are 10
+       gloss_qty + poster_qty + 100 AS qty,             # calculation
+       orders.*                                         # all the columns in orders table. this is common when table join 
+       COUNT(*)                                         # Count the total number of entries
+       COUNT (CITY) AS total_city                       # Count the total number of city
+       COUNT (DISTINCT CITY) AS total_unique_city       # Count the total number of unique city
+
 FROM orders
 ```
 -----
-## 2. The DISTINCT operator 
+## The DISTINCT operator 
 exclude duplicates  
 ``` sql
 # What are the different channels used by account 1001?  
@@ -23,8 +27,15 @@ JOIN web_events w
 ON a.id = w.account_id
 WHERE a.id = 1001;
 ```
+``` sql
+SELECT 
+       COUNT (CITY) AS total_city                       # Count the total number of city
+       COUNT (DISTINCT CITY) AS total_unique_city       # Count the total number of unique city
+
+FROM orders
+```
 -----
-## 3. The MOD() operator OR % 
+## The MOD() operator OR % 
 It returns the remainder of a division calculation
 ``` sql
 SELECT MOD(5,2);
@@ -38,7 +49,19 @@ SELECT 4 % 2;
 ---
 # 0
 ```
----
+-----
+## The LENGTH operator 
+LENGTH() counts the number of bytes, while CHAR_LENGTH() counts the number of characters.  
+For example, if a string contains 5 characters and each character takes 2 bytes (such as Chinese characters), then:
+LENGTH() returns 10; CHAR_LENGTH() returns 5
+Also, for strings that may contain special characters or multibyte characters, it is generally safer to use CHAR_LENGTH() because it measures actual characters, not bytes. 
+
+``` sql
+SELECT CHAR_LENGTH(website)
+FROM accounts;
+```
+
+-------
 ## 4. 取整
 ceil (value) 产生大于或等于指定值（value）的最小整数。  
 floor（value）与 ceil（）相反，产生小于或等于指定值（value）的最小整数。
@@ -122,15 +145,6 @@ SELECT LOWER(name)
 FROM accounts;
 ```
 
-## 10. The LENGTH operator 长度
-LENGTH()是按照字节来统计的，CHAR_LENGTH()是按照字符来统计的   
-一个包含5个字符且每个字符占两个字节(比如汉字)的字符串而言，LENGTH()返回长度10，CHAR_LENGTH()返回长度是5；如果对于单字节的字符，则两者返回结果相同。  
-还有那种特殊字符也注意用CHAR_LENGTH好一点  
-
-``` sql
-SELECT CHAR_LENGTH(website)
-FROM accounts;
-```
 
 ## 11. The SUBSTR operator 截取一部分
 SUBSTR(TEXT, START, LENGTH)
