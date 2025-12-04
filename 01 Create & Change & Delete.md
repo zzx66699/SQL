@@ -92,36 +92,25 @@ TRUNCATE TABLE web_events;
 ![11](https://user-images.githubusercontent.com/60777462/167370604-d064914f-7570-425a-b2c2-5d211f343814.png)
 
 ## Update table
-### 01 改变行
-#### 改变一行
+### Update rows
+EXAMPLE: Exchange the sex 
 ``` sql
-UPDATE orders1
-SET account_id = 1000
-WHERE id = 10;
-```
-EXAMPLE: 性别互换
-``` sql
-UPDATE Salary
+UPDATE Salary   - table name
 SET sex = 
 	CASE sex 
 		WHEN 'm' THEN 'f'
 		ELSE 'm' END;
 ```
-#### 改变多行  
-MySQLWorkbench -> Preferences -> SQL editor(bottom) -> Untick safe update  
-EXERCISE
+EXAMPLE: In orders table, change the comment to 'golden customer' for all the customers whose point > 3000 in customers table.
 ``` sql
-# 选择customers这个table中所有point大于3000的customers 
-# 把他们在orders这个table中的comment改成golden customer
-
 UPDATE orders
 SET comment = 'golden customer'
-WHERE customer_id IN              # 注意这里用的是IN哦 表示只要customer = 其中的任意一个值 就可以改变
+WHERE customer_id IN              
 (SELECT customer_id 
 FROM customers
 WHERE point > 3000)
 ```
-#### 使用别的表格中的数据
+EXAMPLE add in data from another table
 ``` sql
 UPDATE table1
 JOIN table2
