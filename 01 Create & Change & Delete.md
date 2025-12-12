@@ -1,42 +1,37 @@
 # Chapter1 Create & Change & Delete
-## 1. Create connection in MySQL
-![sql](https://user-images.githubusercontent.com/105503216/176116146-65f9a0ff-7b0e-4ffc-a4c9-c4a039de97f2.png)
-
-## 2. Create schema(database)
+## Create schema(database)
 ``` sql
 CREATE SCHEMA CRM_review;
 ```
 
-## 3. Create table
-### 3.1 upload from csv 本地文件中直接导入  
+## Create table
+### Upload from csv 
 ![2](https://user-images.githubusercontent.com/105503216/176120993-f09c60cf-1bcf-4188-a939-ed23cd2b4e4d.png)
 
-### 3.2 create manually 纯手动创建  
+### Create manually  
 ``` sql
 CREATE TABLE IF NOT EXISTS web_events AS
 (
-    id INTEGER AUTO_INCREMENT PRIMARY KEY,     # 列名, data type, 自动增量，作为主键
-    stu_num CHAR(11)                           # 数字形式表示文本内容  
-    account_id INTEGER NOT NULL,               # 非0
-    occurred_at TIMESTAMP,                     # 时间戳
-    channel VARCHAR(15)                        # 长度为15个字节的可变长度且非Unicode的字符数据
-    intro TEXT			                        # 通常用于长段文字
+    id INTEGER AUTO_INCREMENT PRIMARY KEY,     
+    stu_num CHAR(11)                           -- numbers  
+    account_id INTEGER NOT NULL,               
+    occurred_at TIMESTAMP,                     
+    channel VARCHAR(15)                        -- text
+    intro TEXT			                       -- longer text
 );
 
 INSERT INTO web_events VALUES 
 (
     1, 1001, '2015-06-07 17:22:12', 'direct'
-);                                                  # 一行一行地插入
+);                                                  
 INSERT INTO web_events VALUES 
 (
     2, 1001, '2015-02-03 14:03:12', 'direct'
 );
 ```
 
-### 3.3 从其他table中提取创建
-可以通过此种方式完整copy  
-需要注意的是 会ignore some attributes(Primary Key, Auto Increment) when copy 
-
+### Copy from other table
+It will ignore some attributes(Primary Key, Auto Increment) when copy 
 ``` sql
 CREATE TABLE orders_archived AS
 (
@@ -44,17 +39,17 @@ SELECT * FROM orders
 )
 ```
 
-也可以只提取几列 或者是几列具有特定属性的几行
+Add a filter when copy
 ``` sql
 CREATE TABLE IF NOT EXISTS orders1 AS 
 (
 SELECT id, account_id 
-FROM orders                              # 从orders这个table中提取所需列
+FROM orders                              
 WHERE gloss_qty > 10
 );
 ```
-也可以先把新table的列名和attribute写好  
 
+Name the column when copy
 ``` python
 CREATE TABLE actor_name (
     first_name varchar(45) NOT NULL,
@@ -63,7 +58,9 @@ SELECT first_name, last_name
 FROM actor
 ```
 
-## 4. INSERT的三种方式
+
+
+## INSERT
 
 ``` python
 # mysql中常用的三种插入数据的语句: 
